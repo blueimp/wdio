@@ -1,0 +1,52 @@
+version: '3.7'
+services:
+  mailhog:
+    image: blueimp/mailhog
+    read_only: true
+    ports:
+      - 8025:8025
+  example:
+    image: python:alpine
+    command: /srv/server.py
+    user: nobody
+    tty: true
+    read_only: true
+    volumes:
+      - ./src:/srv:ro
+    ports:
+      - 8080:8080
+    depends_on:
+      - mailhog
+  chromedriver:
+    image: blueimp/chromedriver
+    init: true
+    tmpfs: /tmp
+    environment:
+      - DISABLE_X11=false
+      - ENABLE_VNC=true
+      - EXPOSE_X11=true
+    ports:
+      - 5900:5900
+  geckodriver:
+    image: blueimp/geckodriver
+    init: true
+    tmpfs: /tmp
+    shm_size: 2g
+    environment:
+      - DISABLE_X11=false
+      - ENABLE_VNC=true
+      - EXPOSE_X11=true
+    ports:
+      - 5901:5900
+  wdio:
+    image: blueimp/wdio
+    init: true
+    read_only: true
+    environment:
+      - WAIT_FOR_HOSTS=chromedriver:4444 geckodriver:4444 example:8080
+    volumes:
+      - .:/home/wdio
+    depends_on:
+      - chromedriver
+      - geckodriver
+      - example

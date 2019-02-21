@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Send mail</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      div {
+        max-width: 600px;
+        margin: auto;
+      }
+      input,
+      textarea,
+      button {
+        width: 100%;
+        font-size: 16px;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <form action="/" method="POST">
+        <p>
+          <label for="recipient">To</label><br />
+          <input
+            type="email"
+            name="recipient"
+            id="recipient"
+            placeholder="user@example.org"
+            required
+          />
+        </p>
+        <p>
+          <label for="subject">Subject</label><br />
+          <input type="text" name="subject" id="subject" />
+        </p>
+        <p>
+          <label for="content">Message</label><br />
+          <textarea name="content" id="content" rows="6"></textarea>
+        </p>
+        <p><button type="submit" id="submit">Send mail</button></p>
+      </form>
+    </div>
+  </body>
+</html>
