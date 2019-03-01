@@ -91,12 +91,17 @@ To run the tests with Mobile Safari on iOS Simulator, follow these steps:
 
 5. Install [Appium Desktop](https://github.com/appium/appium-desktop).
 
-6. Open Appium Desktop and click on "Start Server":
+6. Add the `example` host to your `/etc/hosts` file:
+   ```sh
+   printf '127.0.0.1\t%s\n' example | sudo tee -a /etc/hosts
+   ```
+
+7. Open Appium Desktop and click on "Start Server":
    ```sh
    open -a appium
    ```
 
-7. Run the tests with Mobile Safari:
+8. Run the tests with Mobile Safari:
    ```sh
    docker-compose run --rm wdio mobile-safari
    ```

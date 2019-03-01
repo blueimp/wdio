@@ -17,6 +17,5 @@ exports.config = Object.assign({}, require('./wdio.conf').config, {
   videos: {
     enabled: false
   },
-  maximizeWindow: false,
-  baseUrl: 'http://localhost:8080'
+  maximizeWindow: false
 })
