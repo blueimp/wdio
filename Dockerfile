@@ -32,6 +32,6 @@ USER wdio
 
 WORKDIR /home/wdio
 
-COPY wait-for.sh /usr/local/bin/wait-for
+COPY bin/wait-for.sh /usr/local/bin/wait-for
 
 ENTRYPOINT ["wait-for", "--", "wdio"]
