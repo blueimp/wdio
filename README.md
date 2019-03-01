@@ -50,12 +50,17 @@ To run the tests with Safari on MacOS, follow these steps:
 
 1. [Configure Safari to Enable WebDriver Support](https://developer.apple.com/documentation/webkit/testing_with_webdriver_in_safari#2957277).
 
-2. Run `safaridriver` on port `4444`:
+2. Add the `example` host to your `/etc/hosts` file:
+   ```sh
+   printf '127.0.0.1\t%s\n' example | sudo tee -a /etc/hosts
+   ```
+
+3. Run `safaridriver` on port `4444`:
    ```sh
    safaridriver -p 4444
    ```
 
-3. Run the tests with Safari:
+4. Run the tests with Safari:
    ```sh
    docker-compose run --rm wdio safari
    ```
