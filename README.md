@@ -143,8 +143,10 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
    open -a appium
    ```
 
-8. Start an Android Virtual Device via
-   > Android Studio → Configure → AVD Manager
+8. Start the Android Virtual Device with a custom `/etc/hosts` file:
+   ```sh
+   bin/android-emulator.sh -hosts etc/android.hosts
+   ```
 
 9. Run the tests with Mobile Chrome:
    ```sh
