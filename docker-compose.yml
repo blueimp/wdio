@@ -11,6 +11,8 @@ services:
     user: nobody
     tty: true
     read_only: true
+    environment:
+      - SMTP_HOST=mailhog:1025
     volumes:
       - ./src:/srv:ro
     ports:

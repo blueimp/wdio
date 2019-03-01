@@ -8,9 +8,9 @@ from email.message import EmailMessage
 from http import HTTPStatus
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
-SERVER_PORT = 8080
-SMTP_HOST = 'mailhog:1025'
-SENDER = 'Tom Bombadil <tom@example>'
+SERVER_PORT = int(os.getenv('SERVER_PORT', '8080'))
+SMTP_HOST = os.getenv('SMTP_HOST', 'localhost:1025')
+SENDER = os.getenv('SENDER', 'Tom Bombadil <tom@example>')
 SENT_URL = '/sent.html'
 HTML_DIR = os.path.dirname(__file__) + '/html'
 
