@@ -3,19 +3,21 @@ Docker setup for [WebdriverIO](https://webdriver.io/) with automatic
 screenshots, image diffing and screen recording support for containerized
 versions of Chrome and Firefox.
 
-Also includes MacOS host configs to test an app running in Docker with Safari
-Desktop as well as Safari Mobile and Chrome Mobile via
-[Appium](http://appium.io/).
+Also includes Webdriver configurations to test an app running in Docker with
+Safari Desktop, Safari Mobile and Chrome Mobile via [Appium](http://appium.io/)
+and Internet Explorer and Microsoft Edge in a Windows 10 virtual machine.
 
-* [Usage](#usage)
-  - [Chrome](#chrome)
-  - [Firefox](#firefox)
-  - [Safari](#safari)
-  - [Mobile Safari](#mobile-safari)
-  - [Mobile Chrome](#mobile-chrome)
-  - [Cleanup](#cleanup)
-* [License](#license)
-* [Author](#author)
+- [Usage](#usage)
+  * [Chrome](#chrome)
+  * [Firefox](#firefox)
+  * [Safari](#safari)
+  * [Mobile Safari](#mobile-safari)
+  * [Mobile Chrome](#mobile-chrome)
+  * [Internet Explorer](#internet-explorer)
+  * [Microsoft Edge](#microsoft-edge)
+  * [Shutdown](#shutdown)
+- [License](#license)
+- [Author](#author)
 
 ## Usage
 
@@ -153,8 +155,91 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
    docker-compose run --rm wdio mobile-chrome
    ```
 
-### Cleanup
-Stop and remove the docker-compose container set:
+### Internet Explorer
+**Please Note:**  
+This guide assumes that a virtual machine with Windows 10 has been set up, e.g.
+using the "MSEdge on Win10" image (which also includes Internet Explorer) from
+[Microsoft's Free VMs](https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/)
+site.
+
+To run the tests with Internet Explorer, follow these steps:
+
+1. Set "Change the size of text, apps, and other items" to 100% in Windows
+   Display Settings.  
+   If the option is grayed out, make sure the virtual machine Graphics
+   configuration allows changing the scaling setting (see e.g.
+   [Parallels article #123951](https://kb.parallels.com/en/123951)).
+
+2. Make sure the Internet Explorer `Zoom` level is set to `100%` so that
+   the native mouse events can be set to the correct coordinates.
+
+3. Edit [ie.js](ie.js) and change the `hostname` property to the IP of the
+   Windows virtual machine.
+
+4. Edit the `example` host entry in the `etc/windows.hosts` file and set its IP
+   address to the IP of the host system in the subnet shared with the Windows
+   virtual machine.
+
+5. Copy [bin/webdriver.ps1](bin/webdriver.ps1) and
+   [etc/windows.hosts](etc/windows.hosts) to the same folder in the Windows
+   virtual machine (e.g. the Desktop).
+
+6. Create a shortcut to `webdriver.ps1` (via "Right-Click" → "Create shortcut"),
+   then open the properties dialog for the shortcut (via "Right-Click" →
+   "Properties") and set the `Target` property to the following value:
+   ```bat
+   powershell -ExecutionPolicy ByPass -File webdriver.ps1
+   ```
+   Click "OK" to save the changes to the shortcut.
+
+7. Double-Click on the webdriver shortcut to setup and start the servers.  
+   Allow `nginx` to communicate on all networks in the Windows Defender Firewall
+   dialog.
+
+8. Run the tests with Internet Explorer:
+   ```sh
+   docker-compose run --rm wdio ie
+   ```
+
+### Microsoft Edge
+**Please Note:**  
+This guide assumes that a virtual machine with Windows 10 has been set up.  
+The scripted installation of
+[MicrosoftWebDriver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
+also requires `17763` as minimum Windows build version.
+
+To run the tests with Microsoft Edge, follow these steps:
+
+1. Edit [edge.js](edge.js) and change the `hostname` property to the IP of the
+   Windows virtual machine.
+
+2. Edit the `example` host entry in the `etc/windows.hosts` file and set its IP
+   address to the IP of the host system in the subnet shared with the Windows
+   virtual machine.
+
+3. Copy [bin/webdriver.ps1](bin/webdriver.ps1) and
+   [etc/windows.hosts](etc/windows.hosts) to the same folder in the Windows
+   virtual machine (e.g. the Desktop).
+
+4. Create a shortcut to `webdriver.ps1` (via "Right-Click" → "Create shortcut"),
+   then open the properties dialog for the shortcut (via "Right-Click" →
+   "Properties") and set the `Target` property to the following value:
+   ```bat
+   powershell -ExecutionPolicy ByPass -File webdriver.ps1
+   ```
+   Click "OK" to save the changes to the shortcut.
+
+5. Double-Click on the webdriver shortcut to setup and start the servers.  
+   Allow `nginx` to communicate on all networks in the Windows Defender Firewall
+   dialog.
+
+6. Run the tests with Microsoft Edge:
+   ```sh
+   docker-compose run --rm wdio edge
+   ```
+
+### Shutdown
+Stop and remove the container set:
 ```sh
 docker-compose down
 ```
