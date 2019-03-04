@@ -4,7 +4,7 @@ services:
     image: blueimp/mailhog
     read_only: true
     ports:
-      - 8025:8025
+      - 127.0.0.1:8025:8025
   example:
     image: python:alpine
     command: /srv/server.py
@@ -16,7 +16,8 @@ services:
     volumes:
       - ./src:/srv:ro
     ports:
-      - 8080:8080
+      - 127.0.0.1:8080:8080
+      - ${SERVER_HOST:-127.0.0.1}:${SERVER_PORT-}:8080
     depends_on:
       - mailhog
   chromedriver:
@@ -28,7 +29,7 @@ services:
       - ENABLE_VNC=true
       - EXPOSE_X11=true
     ports:
-      - 5900:5900
+      - 127.0.0.1:5900:5900
   geckodriver:
     image: blueimp/geckodriver
     init: true
@@ -39,7 +40,7 @@ services:
       - ENABLE_VNC=true
       - EXPOSE_X11=true
     ports:
-      - 5901:5900
+      - 127.0.0.1:5901:5900
   wdio:
     image: blueimp/wdio
     init: true
