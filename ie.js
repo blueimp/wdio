@@ -1,4 +1,4 @@
-exports.config = Object.assign({}, require('./wdio.conf').config, {
+exports.config = Object.assign({}, require('./chrome').config, {
   hostname: process.env.WINDOWS_HOST || 'host.docker.internal',
   port: 4445,
   capabilities: [

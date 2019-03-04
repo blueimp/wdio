@@ -1,4 +1,4 @@
-exports.config = Object.assign({}, require('./wdio.conf').config, {
+exports.config = Object.assign({}, require('./chrome').config, {
   hostname: 'geckodriver',
   capabilities: [
     {
