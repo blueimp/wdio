@@ -12,7 +12,7 @@ https://opensource.org/licenses/MIT
 Resources:
 https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
 https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver
-http://nginx.org/en/docs/windows.html
+https://nginx.org/en/docs/windows.html
 #>
 
 $versions = @{
