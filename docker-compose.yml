@@ -47,6 +47,7 @@ services:
     read_only: true
     environment:
       - WAIT_FOR_HOSTS=chromedriver:4444 geckodriver:4444 example:8080
+      - WINDOWS_HOST
     volumes:
       - .:/home/wdio
     depends_on:

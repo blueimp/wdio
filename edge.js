@@ -1,6 +1,5 @@
 exports.config = Object.assign({}, require('./wdio.conf').config, {
-  // Windows VM:
-  hostname: '10.211.55.3',
+  hostname: process.env.WINDOWS_HOST || 'host.docker.internal',
   capabilities: [
     {
       // MicrosoftWebDriver supports no parallel sessions:
