@@ -4,7 +4,7 @@ screenshots, image diffing and screen recording support for containerized
 versions of Chrome and Firefox.
 
 Also includes Webdriver configurations to test an app running in Docker with
-Safari Desktop, Safari Mobile and Chrome Mobile via [Appium](http://appium.io/)
+Safari Desktop, Safari Mobile and Chrome Mobile via [Appium](https://appium.io/)
 and Internet Explorer and Microsoft Edge on Windows 10.
 
 - [Usage](#usage)
@@ -85,7 +85,7 @@ To run the tests with Mobile Safari on iOS Simulator, follow these steps:
    brew install node carthage
    ```
 
-4. Make sure the necessary [Appium](http://appium.io/) dependencies for iOS 
+4. Make sure the necessary [Appium](https://appium.io/) dependencies for iOS 
    testing are installed:
    ```sh
    npx appium-doctor --ios
@@ -116,7 +116,7 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
 
 2. Add the following lines to your `~/.profile` to make the JDK included in
    Android Studio and the installed Android SDK available to
-   [Appium](http://appium.io/):
+   [Appium](https://appium.io/):
    ```sh
    export JAVA_HOME='/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home'
    export PATH="$JAVA_HOME/bin:$PATH"
@@ -128,7 +128,7 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
    brew install node
    ```
 
-4. Make sure the necessary [Appium](http://appium.io/) dependencies for Android 
+4. Make sure the necessary [Appium](https://appium.io/) dependencies for Android 
    testing are installed:
    ```sh
    npx appium-doctor --android
