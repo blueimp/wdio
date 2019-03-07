@@ -183,7 +183,8 @@ To run the tests with Internet Explorer, follow these steps:
    WINDOWS_HOST=<WINDOWS_HOST_IP>
    ```
    Make sure that the `DOCKER_HOST_IP` is accessible from the Windows machine
-   and the `WINDOWS_HOST_IP` is accessible from a Docker container.
+   and the `WINDOWS_HOST_IP` is accessible from a Docker container (see also the
+   [FAQ](FAQ.md)).
 
 4. Edit the `example` host entry in [etc/windows.hosts](etc/windows.hosts) and
    set its IP address to the `SERVER_HOST` IP defined in the `.env` file.
@@ -227,7 +228,8 @@ To run the tests with Microsoft Edge, follow these steps:
    WINDOWS_HOST=<WINDOWS_HOST_IP>
    ```
    Make sure that the `DOCKER_HOST_IP` is accessible from the Windows machine
-   and the `WINDOWS_HOST_IP` is accessible from a Docker container.
+   and the `WINDOWS_HOST_IP` is accessible from a Docker container (see also the
+   [FAQ](FAQ.md)).
 
 2. Edit the `example` host entry in [etc/windows.hosts](etc/windows.hosts) and
    set its IP address to the `SERVER_HOST` IP defined in the `.env` file.
