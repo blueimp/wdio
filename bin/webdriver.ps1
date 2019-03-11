@@ -71,31 +71,24 @@ function Start-PowershellAdminCommand {
   Start-AdminCommand powershell $params $reason
 }
 
-# Builds a command to enter a new registry DWord property.
-# Returns an empty string if the property already exists:
-function Get-RegistryDWordCommand {
+# Sets a registry DWord property.
+# Also creates the parent path if it does not exist:
+function Set-RegistryDWord {
   param([String]$path, [String]$name, [int]$value)
-  $command = ''
-  if (!(Get-ItemProperty $path $name -ErrorAction SilentlyContinue)) {
+  $prop = Get-ItemProperty $path $name -ErrorAction SilentlyContinue
+  if (!$prop) {
     if (!(Test-Path $path)) {
       # -Force option is required if the parent path does not exist:
-      $command += 'New-Item "{0}" -Force;' -f $path
+      New-Item $path -Force
     }
-    $command += `
-      'New-ItemProperty "{0}" -Name "{1}" -PropertyType DWord -Value {2};' `
-      -f $path,$name,$value
+    New-ItemProperty $path $name -PropertyType DWord -Value $value
+  } elseif ($prop.$name -ne $value) {
+    Set-ItemProperty $path $name $value
   }
-  return $command
 }
 
-# Adds required (and optional) registry entries:
-function Edit-Registry {
-  # Disable Compatibility View for Intranet Sites (optional):
-  $path = 'HKCU:\SOFTWARE\Microsoft\Internet Explorer\BrowserEmulation'
-  $name = 'IntranetCompatibilityMode'
-  if (!(Get-ItemProperty $path $name -ErrorAction SilentlyContinue)) {
-    New-ItemProperty $path $name -PropertyType DWord -Value 0
-  }
+# Edits HKEY_CURRENT_USER (HKCU) registry:
+function Edit-CurrentUserRegistry {
   # Set the same Protected Mode for all Internet Zones by copying the property
   # from zone 4 (Restricted Sites) of the default settings (HKLM) to zones 1-4
   # of the user settings (HKCU):
@@ -114,23 +107,29 @@ function Edit-Registry {
   foreach ($zone in @(1, 2, 3, 4)) {
     Copy-ItemProperty "HKLM:$path\4" -Name $name "HKCU:$path\$zone"
   }
-  $command = ''
-  # Add registry entry to enable the driver to maintain a connection to the
-  # instance of Internet Explorer it creates:
-  $command += Get-RegistryDWordCommand `
-    ('HKLM:\SOFTWARE\Wow6432Node\Microsoft\Internet Explorer' +
-    '\Main\FeatureControl\FEATURE_BFCACHE') iexplore.exe 0
-  # Add registry entry to disable the IE first run page (optional):
-  $command += Get-RegistryDWordCommand `
-    'HKLM:\SOFTWARE\Policies\Microsoft\Internet Explorer\Main' `
-    DisableFirstRunCustomize 1
-  # Add registry entry to disable the Microsoft Edge first run page (optional):
-  $command += Get-RegistryDWordCommand `
-    'HKLM:\SOFTWARE\Policies\Microsoft\MicrosoftEdge\Main' `
-    PreventFirstRunPage 1
-  if ($command) {
-    Start-PowershellAdminCommand $command 'for registry edits'
-  }
+  # Enable the driver to maintain a connection to the instance of Internet
+  # Explorer it creates:
+  $path = 'HKCU:\SOFTWARE\Wow6432Node\Microsoft\Internet Explorer\Main' +
+    '\FeatureControl\FEATURE_BFCACHE'
+  Set-RegistryDWord $path iexplore.exe 0
+  # Path to IE user settings:
+  $path = 'HKCU:\Software\Microsoft\Internet Explorer'
+  # Disable IE Compatibility View for Intranet Sites:
+  Set-RegistryDWord "$path\BrowserEmulation" IntranetCompatibilityMode 0
+  # Disable "Preserve Favorites website data":
+  Set-RegistryDWord "$path\Privacy" UseAllowList 0
+  # Clear IE browsing history on exit:
+  Set-RegistryDWord "$path\Privacy" ClearBrowsingHistoryOnExit 1
+  # Disable the IE first run page:
+  Set-RegistryDWord "$path\Main" DisableFirstRunCustomize 1
+  # Path to Microsoft Edge user settings:
+  $path = 'HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows' +
+    '\CurrentVersion\AppContainer\Storage' +
+    '\microsoft.microsoftedge_8wekyb3d8bbwe\MicrosoftEdge'
+  # Clear Microsoft Edge browsing history on exit:
+  Set-RegistryDWord "$path\Privacy" ClearBrowsingHistoryOnExit 1
+  # Disable the Microsoft Edge first run page:
+  Set-RegistryDWord "$path\Main" PreventFirstRunPage 1
 }
 
 # Overwrites the Windows hosts file with the file windows.hosts, if available:
@@ -211,7 +210,7 @@ function Start-Servers {
   Start-Process nginx '-s stop' -WorkingDirectory nginx
 }
 
-Edit-Registry
+Edit-CurrentUserRegistry
 Update-Hosts
 Install-MicrosoftWebDriver
 Install-IEDriverServer
