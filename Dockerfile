@@ -6,16 +6,16 @@ RUN apk --no-cache add \
     ffmpeg \
   && npm install -g \
     npm@latest \
-    @wdio/cli@^5.6.4 \
-    @wdio/local-runner@^5.6.4 \
-    @wdio/mocha-framework@^5.6.4 \
-    @wdio/spec-reporter@^5.6.4 \
-    @wdio/sync@^5.6.4 \
+    @wdio/cli@^5.7.2 \
+    @wdio/local-runner@^5.7.2 \
+    @wdio/mocha-framework@^5.7.2 \
+    @wdio/spec-reporter@^5.7.2 \
+    @wdio/sync@^5.7.2 \
     chai@^4.2.0 \
     mailhog@^3.0.0 \
     uuid@^3.3.2 \
     wdio-screen-commands@^1.0.0 \
-    webdriverio@^5.6.4 \
+    webdriverio@^5.7.2 \
   # Clean up obsolete files:
   && rm -rf \
     /tmp/* \
