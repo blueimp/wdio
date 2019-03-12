@@ -98,7 +98,8 @@ To run the tests with Mobile Safari on iOS Simulator, follow these steps:
    printf '127.0.0.1\t%s\n' example | sudo tee -a /etc/hosts
    ```
 
-7. Open Appium Desktop and click on "Start Server":
+7. Open Appium Desktop, change the `Host` to `127.0.0.1` and click on "Start
+   Server":
    ```sh
    open -a appium
    ```
@@ -140,7 +141,8 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
    [Chromedriver](https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/web/chromedriver.md)
    version compatible with the version of Chrome running in your Android device.
 
-7. Open Appium Desktop and click on "Start Server":
+7. Open Appium Desktop, change the `Host` to `127.0.0.1` and click on "Start
+   Server":
    ```sh
    open -a appium
    ```
