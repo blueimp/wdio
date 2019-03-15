@@ -15,6 +15,11 @@ https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver
 https://nginx.org/en/docs/windows.html
 #>
 
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+  'PSUseShouldProcessForStateChangingFunctions', ''
+)]
+param()
+
 $versions = @{
   nginx = '1.15.9'
   IEDriver = '3.141.5'
@@ -57,7 +62,7 @@ http {
 $ErrorActionPreference = 'Stop'
 
 # Runs the given command with Administrator privileges:
-function Start-AdminCommand {
+function Invoke-AdminCommand {
   param([String]$command, [String]$params, [String]$reason)
   Clear-Host
   'Requesting Administrator privileges {0}...' -f $reason
@@ -65,10 +70,10 @@ function Start-AdminCommand {
 }
 
 # Runs the given Powershell command with Administrator privileges:
-function Start-PowershellAdminCommand {
+function Invoke-PowershellAdminCommand {
   param([String]$command, [String]$reason)
   $params = "-ExecutionPolicy ByPass -command $($command -replace '"','\"')"
-  Start-AdminCommand powershell $params $reason
+  Invoke-AdminCommand powershell $params $reason
 }
 
 # Sets a registry DWord property.
@@ -83,7 +88,7 @@ function Set-RegistryDWord {
     }
     New-ItemProperty $path $name -PropertyType DWord -Value $value
   } elseif ($prop.$name -ne $value) {
-    Set-ItemProperty $path $name $value
+    Set-ItemProperty $path -Name $name $value
   }
 }
 
@@ -133,13 +138,13 @@ function Edit-CurrentUserRegistry {
 }
 
 # Overwrites the Windows hosts file with the file windows.hosts, if available:
-function Update-Hosts {
+function Update-HostsFile {
   $newHostsFile = "$(Get-Location)\windows.hosts"
   if (Test-Path $newHostsFile) {
     $hostsFile = "$env:windir\System32\drivers\etc\hosts"
     if ((Get-FileHash $hostsFile).hash -ne (Get-FileHash $newHostsFile).hash) {
       $command = 'Copy-Item "{0}" "{1}"' -f $newHostsFile,$hostsFile
-      Start-PowershellAdminCommand $command 'to overwrite the hosts file'
+      Invoke-PowershellAdminCommand $command 'to overwrite the hosts file'
     }
   }
 }
@@ -167,7 +172,7 @@ function Install-MicrosoftWebDriver {
   if ((Get-WindowsBuildNumber) -lt 17763) { return }
   if (!(Get-Command MicrosoftWebDriver -ErrorAction SilentlyContinue)) {
     $capabilityName = 'Microsoft.WebDriver~~~~0.0.1.0'
-    Start-AdminCommand DISM `
+    Invoke-AdminCommand DISM `
       "/Online /Add-Capability /CapabilityName:$capabilityName" `
       'for WebDriver installation'
   }
@@ -195,7 +200,7 @@ function Install-Nginx {
 
 # Starts nginx, IEDriverServer and MicrosoftWebDriver (if installed).
 # Waits for IEDriverServer to close, then sends nginx the stop signal:
-function Start-Servers {
+function Start-Service {
   Clear-Host
   '==========================================================='
   'IMPORTANT: Do not close this window manually.'
@@ -211,8 +216,8 @@ function Start-Servers {
 }
 
 Edit-CurrentUserRegistry
-Update-Hosts
+Update-HostsFile
 Install-MicrosoftWebDriver
 Install-IEDriverServer
 Install-Nginx
-Start-Servers
+Start-Service
