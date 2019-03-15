@@ -45,9 +45,13 @@ services:
     image: blueimp/wdio
     init: true
     read_only: true
+    tmpfs:
+      - /tmp
+      - /home/wdio/.android
     environment:
       - WAIT_FOR_HOSTS=chromedriver:4444 geckodriver:4444 example:8080
       - WINDOWS_HOST
+      - ANDROID_SERIAL
     volumes:
       - .:/home/wdio
     depends_on:

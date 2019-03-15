@@ -24,7 +24,8 @@ exports.config = Object.assign({}, require('./hooks'), {
     saveOnFail: true
   },
   videos: {
-    enabled: false
+    enabled: false,
+    resolution: '1440x900'
   },
   mailhog: {
     host: 'mailhog'

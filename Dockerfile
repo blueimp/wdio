@@ -1,9 +1,13 @@
 FROM alpine:3.9
 
+RUN echo '@edgetesting http://dl-cdn.alpinelinux.org/alpine/edge/testing' \
+  >> /etc/apk/repositories
+
 RUN apk --no-cache add \
     nodejs \
     npm \
     ffmpeg \
+    android-tools@edgetesting \
   && npm install -g \
     npm@latest \
     @wdio/cli@^5.7.2 \
@@ -14,7 +18,7 @@ RUN apk --no-cache add \
     chai@^4.2.0 \
     mailhog@^3.0.0 \
     uuid@^3.3.2 \
-    wdio-screen-commands@^1.0.0 \
+    wdio-screen-commands@^1.1.0 \
     webdriverio@^5.7.2 \
   # Clean up obsolete files:
   && rm -rf \

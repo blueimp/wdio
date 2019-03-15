@@ -15,7 +15,10 @@ exports.config = Object.assign({}, require('./chrome').config, {
     }
   ],
   videos: {
-    enabled: false
+    enabled: true,
+    bitRate: 100000,
+    startDelay: 500,
+    stopDelay: 1000
   },
   maximizeWindow: false
 })

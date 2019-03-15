@@ -11,6 +11,7 @@ exports.config = Object.assign({}, require('./chrome').config, {
     }
   ],
   videos: {
-    enabled: true
+    enabled: true,
+    resolution: '1440x900'
   }
 })

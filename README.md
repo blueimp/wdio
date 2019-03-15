@@ -1,11 +1,11 @@
 # WDIO
 Docker setup for [WebdriverIO](https://webdriver.io/) with automatic
 screenshots, image diffing and screen recording support for containerized
-versions of Chrome and Firefox.
+versions of Chrome and Firefox, as well as Safari Mobile and Chrome Mobile via
+[Appium](https://appium.io/).
 
-Also includes Webdriver configurations to test an app running in Docker with
-Safari Desktop, Safari Mobile and Chrome Mobile via [Appium](https://appium.io/)
-and Internet Explorer and Microsoft Edge on Windows 10.
+Also includes test configurations for Safari Desktop on MacOS and Internet
+Explorer and Microsoft Edge on Windows 10.
 
 - [Usage](#usage)
   * [Chrome](#chrome)
