@@ -1,11 +1,9 @@
 # WDIO
 Docker setup for [WebdriverIO](https://webdriver.io/) with automatic
 screenshots, image diffing and screen recording support for containerized
-versions of Chrome and Firefox, as well as Safari Mobile and Chrome Mobile via
-[Appium](https://appium.io/).
-
-Also includes test configurations for Safari Desktop on MacOS and Internet
-Explorer and Microsoft Edge on Windows 10.
+versions of Chrome and Firefox, Safari Mobile and Chrome Mobile via
+[Appium](https://appium.io/) and Safari on MacOS as well as Internet Explorer
+and Microsoft Edge on Windows 10.
 
 - [Usage](#usage)
   * [Chrome](#chrome)
@@ -52,17 +50,24 @@ To run the tests with Safari on MacOS, follow these steps:
 
 1. [Configure Safari to Enable WebDriver Support](https://developer.apple.com/documentation/webkit/testing_with_webdriver_in_safari#2957277).
 
-2. Add the `example` host to your `/etc/hosts` file:
+2. Download and install [MJPEG Server](https://github.com/blueimp/mjpeg-server)
+   as `mjpeg-server` in your `PATH` and install [FFmpeg](https://ffmpeg.org/)
+   via [Homebrew](https://brew.sh/):
+   ```sh
+   brew install ffmpeg
+   ```
+
+3. Add the `example` host to your `/etc/hosts` file:
    ```sh
    printf '127.0.0.1\t%s\n' example | sudo tee -a /etc/hosts
    ```
 
-3. Run `safaridriver` on port `4444`:
+4. Start `safaridriver` and `mjpeg-server` with the provided helper script:
    ```sh
-   safaridriver -p 4444
+   bin/webdriver.sh [screen index]
    ```
 
-4. Run the tests with Safari:
+5. Run the tests with Safari:
    ```sh
    docker-compose run --rm wdio safari
    ```
@@ -204,8 +209,8 @@ To run the tests with Internet Explorer, follow these steps:
    Click "OK" to save the changes to the shortcut.
 
 7. Double-Click on the webdriver shortcut to setup and start the servers.  
-   Allow `nginx` to communicate on all networks in the Windows Defender Firewall
-   dialog.
+   Allow `nginx` and `MJPEGServer` to communicate on all networks in the Windows
+   Defender Firewall dialog.
 
 8. Run the tests with Internet Explorer:
    ```sh
@@ -249,8 +254,8 @@ To run the tests with Microsoft Edge, follow these steps:
    Click "OK" to save the changes to the shortcut.
 
 5. Double-Click on the webdriver shortcut to setup and start the servers.  
-   Allow `nginx` to communicate on all networks in the Windows Defender Firewall
-   dialog.
+   Allow `nginx` and `MJPEGServer` to communicate on all networks in the Windows
+   Defender Firewall dialog.
 
 6. Run the tests with Microsoft Edge:
    ```sh

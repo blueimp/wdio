@@ -8,6 +8,9 @@ exports.config = Object.assign({}, require('./chrome').config, {
     }
   ],
   videos: {
-    enabled: false
+    enabled: true,
+    inputFormat: 'mjpeg',
+    startDelay: 500,
+    stopDelay: 1500
   }
 })

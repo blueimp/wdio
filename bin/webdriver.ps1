@@ -1,6 +1,7 @@
 <#
 Installs and starts Webdriver servers for IE and Microsoft Edge on Windows 10.
 Installs and starts NGINX as reverse proxy for remote Webdriver connections.
+Installs and starts MJPEGServer and FFmpeg for screen recordings.
 Edits registry properties to configure IE and Microsoft Edge.
 
 Copyright 2019, Sebastian Tschan
@@ -18,11 +19,23 @@ https://nginx.org/en/docs/windows.html
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
   'PSUseShouldProcessForStateChangingFunctions', ''
 )]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+  'PSAvoidUsingPositionalParameters', ''
+)]
 param()
+
+$ErrorActionPreference = 'Stop' # Stop if a cmdlet fails
+
+$ffmpegOptions = @{
+  fps = '15'
+  quality = '7' # Value between 2 (best) and 31 (worst)
+}
 
 $versions = @{
   nginx = '1.15.9'
   IEDriver = '3.141.5'
+  ffmpeg = '4.1.1'
+  MJPEGServer = '1.0.0'
 }
 
 $downloads = @{
@@ -31,10 +44,27 @@ $downloads = @{
   # The download URL contains the version number twice.
   # Once as directory with the major.minor version and once in the file name
   # with the full version string:
-  IEDriver = 'https://selenium-release.storage.googleapis.com/' +
-    '{0}/IEDriverServer_Win32_{1}.zip' `
+  IEDriver = ('https://selenium-release.storage.googleapis.com/' +
+    '{0}/IEDriverServer_Win32_{1}.zip') `
     -f ($versions.IEDriver.split('.')[0..1] -join '.'),$versions.IEDriver
+  ffmpeg = ('https://ffmpeg.zeranoe.com/builds/win64/static/' +
+    'ffmpeg-{0}-win64-static.zip') -f $versions.ffmpeg
+  MJPEGServer = ('https://github.com/blueimp/mjpeg-server/releases/download/' +
+    'v{0}/MJPEGServer.exe') -f $versions.MJPEGServer
 }
+
+$ffmpegCommand = ('ffmpeg' +
+  ' -loglevel error' +
+  ' -probesize 32' +
+  ' -fpsprobesize 0' +
+  ' -analyzeduration 0' +
+  ' -fflags nobuffer' +
+  ' -f gdigrab' +
+  ' -r {0}' +
+  ' -i desktop' +
+  ' -f mpjpeg' +
+  ' -q {1}' +
+  ' -') -f $ffmpegOptions.fps,$ffmpegOptions.quality
 
 # NGINX configuration as reverse proxy for Edge WebDriver and IEDriverServer:
 $nginxConfig = '
@@ -58,8 +88,8 @@ http {
 }
 '
 
-# Stop if a cmdlet fails:
-$ErrorActionPreference = 'Stop'
+# Relative install paths to add to the PATH environment variable:
+$installPaths = @('bin', 'nginx', 'ffmpeg\bin')
 
 # Runs the given command with Administrator privileges:
 function Invoke-AdminCommand {
@@ -180,38 +210,82 @@ function Install-MicrosoftWebDriver {
 
 # Installs IEDriverServer:
 function Install-IEDriverServer {
-  if (!(Test-Path IEDriverServer.exe)) {
+  if (!(Test-Path bin\IEDriverServer.exe)) {
+    New-Item bin -ItemType Directory -Force
     Clear-Host
+    'Installing IEDriverServer ...'
     Invoke-ZipDownload $downloads.IEDriver
+    Move-Item IEDriverServer.exe bin
   }
-  Set-Alias IEDriverServer "$(Get-Location)\IEDriverServer.exe"
 }
 
 # Installs and configures nginx:
-function Install-Nginx {
+function Install-NGINX {
   if (!(Test-Path nginx)) {
     Clear-Host
+    'Installing nginx ...'
     Invoke-ZipDownload $downloads.nginx
     Move-Item nginx-* nginx
     $nginxConfig | Out-File nginx\conf\nginx.conf ASCII
   }
-  Set-Alias nginx "$(Get-Location)\nginx\nginx.exe"
+}
+
+# Installs ffmpeg:
+function Install-FFmpeg {
+  if (!(Test-Path ffmpeg)) {
+    Clear-Host
+    'Installing ffmpeg ...'
+    Invoke-ZipDownload $downloads.ffmpeg
+    Move-Item ffmpeg-* ffmpeg
+  }
+}
+
+# Installs MJPEGServer:
+function Install-MJPEGServer {
+  if (!(Test-Path bin\MJPEGServer.exe)) {
+    New-Item bin -ItemType Directory -Force
+    Clear-Host
+    'Installing MJPEGServer ...'
+    Invoke-WebRequest $downloads.MJPEGServer -OutFile MJPEGServer.exe
+    Move-Item MJPEGServer.exe bin
+  }
+}
+
+# Updates the PATH environment variable with the installed program paths:
+function Update-Path {
+  $currentPath = $(Get-Location)
+  $originalEnvPath = $env:Path
+  $pathComponents = $originalEnvPath.TrimEnd(';') -split ';'
+  foreach ($path in $installPaths) {
+    if ($pathComponents -notcontains "$currentPath\$path") {
+      $pathComponents += "$currentPath\$path"
+    }
+  }
+  $env:Path = ($pathComponents -join ';') + ';'
+  if ($env:Path -ne $originalEnvPath) {
+    [Environment]::SetEnvironmentVariable(
+      'Path',
+      $env:Path,
+      [System.EnvironmentVariableTarget]::User
+    )
+  }
 }
 
 # Starts nginx, IEDriverServer and MicrosoftWebDriver (if installed).
 # Waits for IEDriverServer to close, then sends nginx the stop signal:
 function Start-Service {
   Clear-Host
-  '==========================================================='
+  '========================================================'
   'IMPORTANT: Do not close this window manually.'
-  'It will close automatically when IEDriverServer is stopped.'
-  '==========================================================='
-  'Starting servers...'
+  'It will close automatically when MJPEGServer is stopped.'
+  '========================================================'
+  'Starting servers ...'
   if (Get-Command MicrosoftWebDriver -ErrorAction SilentlyContinue) {
     Start-Process MicrosoftWebDriver
   }
+  Start-Process IEDriverServer
   Start-Process nginx -WorkingDirectory nginx
-  Start-Process IEDriverServer -Wait
+  Start-Process MJPEGServer $ffmpegCommand -Wait
   Start-Process nginx '-s stop' -WorkingDirectory nginx
 }
 
@@ -219,5 +293,8 @@ Edit-CurrentUserRegistry
 Update-HostsFile
 Install-MicrosoftWebDriver
 Install-IEDriverServer
-Install-Nginx
+Install-NGINX
+Install-FFmpeg
+Install-MJPEGServer
+Update-Path
 Start-Service
