@@ -19,7 +19,7 @@ exports.config = Object.assign({}, require('./chrome').config, {
     inputFormat: 'mjpeg',
     port: 9100,
     startDelay: 500,
-    stopDelay: 1000
+    stopDelay: 1500
   },
   maximizeWindow: false
 })
