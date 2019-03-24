@@ -11,6 +11,6 @@ exports.config = Object.assign({}, require('./chrome').config, {
     enabled: true,
     inputFormat: 'mjpeg',
     startDelay: 500,
-    stopDelay: 1500
+    stopDelay: 500
   }
 })

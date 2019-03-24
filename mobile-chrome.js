@@ -18,7 +18,7 @@ exports.config = Object.assign({}, require('./chrome').config, {
     enabled: true,
     bitRate: 100000,
     startDelay: 500,
-    stopDelay: 1500
+    stopDelay: 500
   },
   maximizeWindow: false
 })
