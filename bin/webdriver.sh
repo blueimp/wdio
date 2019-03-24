@@ -23,9 +23,9 @@ mjpeg-server -a 127.0.0.1:9000 -- ffmpeg \
   -fflags nobuffer \
   -f avfoundation \
   -capture_cursor 1 \
-  -r 15 \
+  -r "${FPS:-15}" \
   -pixel_format yuyv422 \
   -i "$INDEX" \
   -f mpjpeg \
-  -q 7 \
+  -q "${QUALITY:-2}" \
   -

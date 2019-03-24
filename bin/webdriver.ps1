@@ -28,7 +28,7 @@ $ErrorActionPreference = 'Stop' # Stop if a cmdlet fails
 
 $ffmpegOptions = @{
   fps = '15'
-  quality = '7' # Value between 2 (best) and 31 (worst)
+  quality = '2' # Value between 2 (best) and 31 (worst)
 }
 
 $versions = @{
