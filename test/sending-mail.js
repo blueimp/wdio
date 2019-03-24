@@ -2,7 +2,7 @@ const id = uuidv4()
 const recipient = id + '@example.org'
 
 describe('Sending mail', () => {
-  it('should succeed', () => {
+  it('sends mail', () => {
     browser.url('/')
     browser.getTitle().should.equal('Send mail')
     browser.saveAndDiffScreenshot('Send mail')

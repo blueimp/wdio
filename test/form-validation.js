@@ -1,5 +1,5 @@
 describe('Form validation', () => {
-  it('should be enforced', () => {
+  it('enforces required fields', () => {
     browser.url('/')
     $('#submit').click()
     $('#result').waitForExist(500, true)
