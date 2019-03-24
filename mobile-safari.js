@@ -14,6 +14,10 @@ exports.config = Object.assign({}, require('./chrome').config, {
       deviceName: 'iPhone SE'
     }
   ],
+  appium: {
+    mjpegServerFramerate: 15,
+    mjpegServerScreenshotQuality: 100
+  },
   videos: {
     enabled: true,
     inputFormat: 'mjpeg',
