@@ -35,7 +35,7 @@ $versions = @{
   nginx = '1.15.9'
   IEDriver = '3.141.5'
   ffmpeg = '4.1.1'
-  MJPEGServer = '1.0.0'
+  MJPEGServer = '1.1.0'
 }
 
 $downloads = @{
