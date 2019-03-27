@@ -11,6 +11,7 @@ describe('Sending mail', () => {
 
   it('sends mail', () => {
     browser.url('/')
+    $('#recipient').waitForExist()
     browser.getTitle().should.equal('Send mail')
     browser.saveAndDiffScreenshot('Send mail')
     $('#recipient').setValue(recipient)
@@ -25,6 +26,7 @@ describe('Sending mail', () => {
     $('#back')
       .$('a')
       .click()
+    $('#recipient').waitForExist()
     browser.getTitle().should.equal('Send mail')
     browser.mailhog('latestTo', recipient).text.should.equal(id)
   })
