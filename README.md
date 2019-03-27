@@ -96,17 +96,19 @@ To run the tests with Mobile Safari on iOS Simulator, follow these steps:
    npx appium-doctor --ios
    ```
 
-5. Install [Appium Desktop](https://github.com/appium/appium-desktop).
+5. Install [Appium](https://appium.io/) as global NPM package:
+   ```sh
+   npm install -g appium
+   ```
 
 6. Add the `example` host to your `/etc/hosts` file:
    ```sh
    printf '127.0.0.1\t%s\n' example | sudo tee -a /etc/hosts
    ```
 
-7. Open Appium Desktop, change the `Host` to `127.0.0.1` and click on "Start
-   Server":
+7. Start `appium` with the provided helper script:
    ```sh
-   open -a appium
+   bin/appium.sh
    ```
 
 8. Run the tests with Mobile Safari:
@@ -140,24 +142,28 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
    npx appium-doctor --android
    ```
 
-5. Install [Appium Desktop](https://github.com/appium/appium-desktop).
-
-6. Make sure to configure Appium with a
+5. Install [Appium](https://appium.io/) as global NPM package:
+   ```sh
+   npm install -g appium [--chromedriver_version=VERSION]
+   ```
+   Make sure to configure `appium` with a
    [Chromedriver](https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/web/chromedriver.md)
    version compatible with the version of Chrome running in your Android device.
+   If `appium` has already been installed with an incompatible `chromedriver`
+   version, you might want to uninstall and reinstall it with the proper
+   `--chromedriver_version` argument.
 
-7. Open Appium Desktop, change the `Host` to `127.0.0.1` and click on "Start
-   Server":
+6. Start `appium` with the provided helper script:
    ```sh
-   open -a appium
+   bin/appium.sh
    ```
 
-8. Start the Android Virtual Device with a custom `/etc/hosts` file:
+7. Start the Android Virtual Device with a custom `/etc/hosts` file:
    ```sh
    bin/android-emulator.sh -hosts etc/android.hosts
    ```
 
-9. Run the tests with Mobile Chrome:
+8. Run the tests with Mobile Chrome:
    ```sh
    docker-compose run --rm wdio mobile-chrome
    ```
