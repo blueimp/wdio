@@ -10,16 +10,16 @@ RUN apk --no-cache add \
     android-tools@edgetesting \
   && npm install -g \
     npm@latest \
-    @wdio/cli@^5.7.5 \
-    @wdio/local-runner@^5.7.5 \
-    @wdio/mocha-framework@^5.7.3 \
+    @wdio/cli@^5.7.6 \
+    @wdio/local-runner@^5.7.6 \
+    @wdio/mocha-framework@^5.7.6 \
     @wdio/spec-reporter@^5.7.2 \
-    @wdio/sync@^5.7.3 \
+    @wdio/sync@^5.7.6 \
     chai@^4.2.0 \
     mailhog@^3.0.0 \
     uuid@^3.3.2 \
-    wdio-screen-commands@^2.1.0 \
-    webdriverio@^5.7.5 \
+    wdio-screen-commands@^2.2.0 \
+    webdriverio@^5.7.6 \
   # Clean up obsolete files:
   && rm -rf \
     /tmp/* \
