@@ -53,7 +53,8 @@ services:
       - WINDOWS_HOST
       - ANDROID_SERIAL
     volumes:
-      - .:/home/wdio
+      - .:/opt:ro
+      - ./reports:/opt/reports
     depends_on:
       - chromedriver
       - geckodriver

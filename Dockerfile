@@ -34,7 +34,7 @@ RUN adduser -D -u 1000 wdio
 
 USER wdio
 
-WORKDIR /home/wdio
+WORKDIR /opt
 
 COPY bin/wait-for.sh /usr/local/bin/wait-for
 
