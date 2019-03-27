@@ -64,7 +64,7 @@ To run the tests with Safari on MacOS, follow these steps:
 
 4. Start `safaridriver` and `mjpeg-server` with the provided helper script:
    ```sh
-   bin/webdriver.sh [screen index]
+   bin/safaridriver.sh [screen index]
    ```
 
 5. Run the tests with Safari:
