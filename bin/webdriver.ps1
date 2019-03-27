@@ -35,7 +35,7 @@ $versions = @{
   nginx = '1.15.9'
   IEDriver = '3.141.5'
   ffmpeg = '4.1.1'
-  MJPEGServer = '1.1.0'
+  MJPEGServer = '1.2.0'
 }
 
 $downloads = @{
@@ -50,7 +50,7 @@ $downloads = @{
   ffmpeg = ('https://ffmpeg.zeranoe.com/builds/win64/static/' +
     'ffmpeg-{0}-win64-static.zip') -f $versions.ffmpeg
   MJPEGServer = ('https://github.com/blueimp/mjpeg-server/releases/download/' +
-    'v{0}/MJPEGServer.exe') -f $versions.MJPEGServer
+    'v{0}/mjpeg-server-windows-amd64.zip') -f $versions.MJPEGServer
 }
 
 $ffmpegCommand = ('ffmpeg' +
@@ -246,7 +246,7 @@ function Install-MJPEGServer {
     New-Item bin -ItemType Directory -Force
     Clear-Host
     'Installing MJPEGServer ...'
-    Invoke-WebRequest $downloads.MJPEGServer -OutFile MJPEGServer.exe
+    Invoke-ZipDownload $downloads.MJPEGServer
     Move-Item MJPEGServer.exe bin
   }
 }
