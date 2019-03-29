@@ -36,6 +36,6 @@ USER wdio
 
 WORKDIR /opt
 
-COPY bin/wait-for.sh /usr/local/bin/wait-for
+COPY bin/wait-for-hosts.sh /usr/local/bin/wait-for-hosts
 
-ENTRYPOINT ["wait-for", "--", "wdio"]
+ENTRYPOINT ["wait-for-hosts", "--", "wdio"]

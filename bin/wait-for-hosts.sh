@@ -4,18 +4,19 @@
 # Waits for the given host(s) to be available before executing a given command.
 # Tests for availability by using netcat to connect to the hosts via TCP.
 #
-# Usage: ./wait-for.sh [-q] [-t seconds] [host:port] [...] [-- command args...]
-#
-# The status output can be made quiet by adding the `-q` argument or by setting
-# the environment variable WAIT_FOR_QUIET to `1`.
-#
-# The default timeout of 10 seconds can be changed via `-t seconds` argument or
-# by setting the WAIT_FOR_TIMEOUT environment variable to the desired number of
-# seconds.
+# Usage:
+# ./wait-for-hosts.sh [-q] [-t seconds] [host:port] [...] [-- command args...]
 #
 # The script accepts multiple `host:port` combinations as arguments or defined
 # as WAIT_FOR_HOSTS environment variable, separating the `host:port`
 # combinations via spaces.
+#
+# The status output can be made quiet by adding the `-q` argument or by setting
+# the environment variable WAIT_FOR_HOSTS_QUIET to `1`.
+#
+# The default timeout of 10 seconds can be changed via `-t seconds` argument or
+# by setting the WAIT_FOR_HOSTS_TIMEOUT environment variable to the desired
+# number of seconds.
 #
 # The command defined after the `--` argument separator will be executed if all
 # the given hosts are reachable.
@@ -29,8 +30,8 @@
 
 set -e
 
-TIMEOUT=${WAIT_FOR_TIMEOUT:-10}
-QUIET=${WAIT_FOR_QUIET:-0}
+QUIET=${WAIT_FOR_HOSTS_QUIET:-0}
+TIMEOUT=${WAIT_FOR_HOSTS_TIMEOUT:-10}
 
 is_integer() {
   test "$1" -eq "$1" 2> /dev/null
@@ -52,7 +53,7 @@ quiet_echo() {
   if [ "$QUIET" -ne 1 ]; then echo "$@" >&2; fi
 }
 
-wait_for_service() {
+wait_for_host() {
   HOST="${1%:*}"
   PORT="${1#*:}"
   if ! is_integer "$PORT"; then
@@ -91,14 +92,14 @@ while [ $# != 0 ]; do
       break
       ;;
     *)
-      wait_for_service "$1"
+      wait_for_host "$1"
       shift
       ;;
   esac
 done
 
-for SERVICE in $WAIT_FOR_HOSTS; do
-  wait_for_service "$SERVICE"
+for HOST in $WAIT_FOR_HOSTS; do
+  wait_for_host "$HOST"
 done
 
 exec "$@"
