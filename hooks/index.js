@@ -4,7 +4,7 @@ const cmds = require('wdio-screen-commands')
 
 module.exports = {
   before: () => {
-    require('chai').Should()
+    global.should = require('chai').should()
     global.uuidv4 = require('uuid/v4')
     const mailhog = require('mailhog')(browser.config.mailhog)
     browser.addCommand('mailhog', async (cmd, ...args) => {
