@@ -12,8 +12,8 @@ exports.config = Object.assign({}, require('./chrome').config, {
       maxInstances: 1,
       browserName: 'safari',
       platformName: 'iOS',
-      platformVersion: '12.2',
-      deviceName: 'iPhone SE',
+      platformVersion: process.env.PLATFORM_VERSION || '12.2',
+      deviceName: process.env.DEVICE_NAME || 'iPhone SE',
       orientation
     }
   ],

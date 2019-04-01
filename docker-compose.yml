@@ -55,6 +55,8 @@ services:
           example:8080
       - WINDOWS_HOST
       - ANDROID_SERIAL
+      - PLATFORM_VERSION
+      - DEVICE_NAME
       - ORIENTATION
     volumes:
       - .:/opt:ro

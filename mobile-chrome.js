@@ -12,7 +12,8 @@ exports.config = Object.assign({}, require('./chrome').config, {
       maxInstances: 1,
       browserName: 'chrome',
       platformName: 'Android',
-      deviceName: 'Android Emulator',
+      platformVersion: process.env.PLATFORM_VERSION,
+      deviceName: process.env.DEVICE_NAME || 'Android Emulator',
       nativeWebScreenshot: true,
       orientation
     }
