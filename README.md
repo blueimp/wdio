@@ -116,6 +116,24 @@ To run the tests with Mobile Safari on iOS Simulator, follow these steps:
    docker-compose run --rm wdio mobile-safari
    ```
 
+   To run the tests in landscape orientation, provide the `ORIENTATION`
+   environment variable:
+   ```sh
+   ORIENTATION=LANDSCAPE docker-compose run --rm wdio mobile-safari
+   ```
+
+   To use a different iOS device than defined in the config, provide the
+   `DEVICE_NAME` environment variable:
+   ```sh
+   DEVICE_NAME='iPad Air' docker-compose run --rm wdio mobile-safari
+   ```
+
+   To use a different iOS version than defined in the config, provide the
+   `PLATFORM_VERSION` environment variable:
+   ```sh
+   PLATFORM_VERSION=12.1 docker-compose run --rm wdio mobile-safari
+   ```
+
 ### Mobile Chrome
 To run the tests with Mobile Chrome on Android Simulator, follow these steps:
 
@@ -166,6 +184,12 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
 8. Run the tests with Mobile Chrome:
    ```sh
    docker-compose run --rm wdio mobile-chrome
+   ```
+
+   To run the tests in landscape orientation, provide the `ORIENTATION`
+   environment variable:
+   ```sh
+   ORIENTATION=LANDSCAPE docker-compose run --rm wdio mobile-chrome
    ```
 
 ### Internet Explorer
