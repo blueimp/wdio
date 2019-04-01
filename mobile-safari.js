@@ -1,3 +1,5 @@
+const orientation = process.env.ORIENTATION || 'PORTRAIT' // LANDSCAPE|PORTRAIT
+
 exports.config = Object.assign({}, require('./chrome').config, {
   // Docker for Mac host address:
   hostname: 'host.docker.internal',
@@ -11,7 +13,8 @@ exports.config = Object.assign({}, require('./chrome').config, {
       browserName: 'safari',
       platformName: 'iOS',
       platformVersion: '12.2',
-      deviceName: 'iPhone SE'
+      deviceName: 'iPhone SE',
+      orientation
     }
   ],
   appium: {
@@ -21,6 +24,7 @@ exports.config = Object.assign({}, require('./chrome').config, {
   videos: {
     enabled: true,
     inputFormat: 'mjpeg',
+    rotate: orientation === 'LANDSCAPE' ? 90 : undefined,
     port: 9100,
     startDelay: 500,
     stopDelay: 500

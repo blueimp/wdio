@@ -55,6 +55,7 @@ services:
           example:8080
       - WINDOWS_HOST
       - ANDROID_SERIAL
+      - ORIENTATION
     volumes:
       - .:/opt:ro
       - ./reports:/opt/reports

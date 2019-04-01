@@ -1,3 +1,5 @@
+const orientation = process.env.ORIENTATION || 'PORTRAIT' // LANDSCAPE|PORTRAIT
+
 exports.config = Object.assign({}, require('./chrome').config, {
   // Docker for Mac host address:
   hostname: 'host.docker.internal',
@@ -11,7 +13,8 @@ exports.config = Object.assign({}, require('./chrome').config, {
       browserName: 'chrome',
       platformName: 'Android',
       deviceName: 'Android Emulator',
-      nativeWebScreenshot: true
+      nativeWebScreenshot: true,
+      orientation
     }
   ],
   videos: {
