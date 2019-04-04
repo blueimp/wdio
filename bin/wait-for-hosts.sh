@@ -58,12 +58,12 @@ wait_for_host() {
     return 1
   fi
   if [ "$QUIET" -ne 1 ]; then
-    printf 'Waiting for %s to become available ... ' "$1" >&2
+    printf "Waiting for host: %-${PADDING}s ... " "$1" >&2
   fi
   TIME_LIMIT=$(($(date +%s)+TIMEOUT))
   while ! OUTPUT="$(connect_to_service "$HOST" "$PORT" 2>&1)"; do
     if [ "$(date +%s)" -ge "$TIME_LIMIT" ]; then
-      quiet_echo 'timeout'
+      quiet_echo timeout
       if [ -n "$OUTPUT" ]; then
         quiet_echo "$OUTPUT"
       fi
@@ -71,30 +71,35 @@ wait_for_host() {
     fi
     sleep 1
   done
-  quiet_echo 'done'
+  quiet_echo ok
+}
+
+set_padding() {
+  PADDING=0
+  while [ $# != 0 ]; do
+    case "$1" in
+      -t) shift 2;;
+      -q) break;;
+      --) break;;
+       *) test ${#1} -gt $PADDING && PADDING=${#1}; shift;;
+    esac
+  done
 }
 
 QUIET=${WAIT_FOR_HOSTS_QUIET:-0}
 set_timeout "${WAIT_FOR_HOSTS_TIMEOUT:-10}"
 
+if [ "$QUIET" -ne 1 ]; then
+  # shellcheck disable=SC2086
+  set_padding $WAIT_FOR_HOSTS "$@"
+fi
+
 while [ $# != 0 ]; do
   case "$1" in
-    -t)
-      set_timeout "$2"
-      shift 2
-      ;;
-    -q)
-      QUIET=1
-      shift
-      ;;
-    --)
-      shift
-      break
-      ;;
-    *)
-      wait_for_host "$1"
-      shift
-      ;;
+    -t) set_timeout "$2"; shift 2;;
+    -q) QUIET=1; shift;;
+    --) shift; break;;
+     *) wait_for_host "$1"; shift;;
   esac
 done
 
