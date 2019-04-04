@@ -25,7 +25,9 @@ exports.config = Object.assign({}, require('./hooks'), {
   },
   videos: {
     enabled: false,
-    resolution: '1440x900'
+    resolution: '1440x900',
+    startDelay: 500,
+    stopDelay: 500
   },
   mailhog: {
     host: 'mailhog'
