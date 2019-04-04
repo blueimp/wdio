@@ -62,7 +62,7 @@ wait_for_host() {
   fi
   TIME_LIMIT=$(($(date +%s)+TIMEOUT))
   while ! OUTPUT="$(connect_to_service "$HOST" "$PORT" 2>&1)"; do
-    if [ "$(date +%s)" -gt "$TIME_LIMIT" ]; then
+    if [ "$(date +%s)" -ge "$TIME_LIMIT" ]; then
       quiet_echo 'timeout'
       if [ -n "$OUTPUT" ]; then
         quiet_echo "$OUTPUT"
