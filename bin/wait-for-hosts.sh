@@ -30,9 +30,6 @@
 
 set -e
 
-QUIET=${WAIT_FOR_HOSTS_QUIET:-0}
-TIMEOUT=${WAIT_FOR_HOSTS_TIMEOUT:-10}
-
 is_integer() {
   test "$1" -eq "$1" 2> /dev/null
 }
@@ -76,6 +73,9 @@ wait_for_host() {
   done
   quiet_echo 'done'
 }
+
+QUIET=${WAIT_FOR_HOSTS_QUIET:-0}
+set_timeout "${WAIT_FOR_HOSTS_TIMEOUT:-10}"
 
 while [ $# != 0 ]; do
   case "$1" in
