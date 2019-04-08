@@ -16,9 +16,9 @@ RUN apk --no-cache add \
     @wdio/spec-reporter@^5.7.9 \
     @wdio/sync@^5.7.9 \
     chai@^4.2.0 \
-    mailhog@^3.0.0 \
+    mailhog@^4.0.0 \
     uuid@^3.3.2 \
-    wdio-screen-commands@^2.5.0 \
+    wdio-screen-commands@^2.6.0 \
     webdriverio@^5.7.9 \
   # Clean up obsolete files:
   && rm -rf \
