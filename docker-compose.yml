@@ -9,9 +9,9 @@ services:
     image: python:alpine
     command: /srv/server.py
     user: nobody
-    tty: true
     read_only: true
     environment:
+      - PYTHONUNBUFFERED=1
       - SMTP_HOST=mailhog:1025
     volumes:
       - ./src:/srv:ro
