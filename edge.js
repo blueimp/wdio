@@ -12,5 +12,10 @@ exports.config = Object.assign({}, require('./chrome').config, {
     inputFormat: 'mjpeg',
     startDelay: 500,
     stopDelay: 500
-  }
+  },
+  // Disable maximizeWindow since it is broken for Edge webdriver
+  maximizeWindow: false,
+  // Disable file uploads as element.addValue() is broken for Edge webdriver:
+  // > JSON format error: parameters object must contain pair with name "text"
+  assetsDir: null
 })

@@ -10,6 +10,7 @@ services:
     command: /srv/server.py
     user: nobody
     read_only: true
+    tmpfs: /tmp
     environment:
       - PYTHONUNBUFFERED=1
       - SMTP_HOST=mailhog:1025
@@ -28,6 +29,8 @@ services:
       - DISABLE_X11=false
       - ENABLE_VNC=true
       - EXPOSE_X11=true
+    volumes:
+      - ./assets:/home/webdriver/assets:ro
     ports:
       - 127.0.0.1:5900:5900
   geckodriver:
@@ -39,6 +42,8 @@ services:
       - DISABLE_X11=false
       - ENABLE_VNC=true
       - EXPOSE_X11=true
+    volumes:
+      - ./assets:/home/webdriver/assets:ro
     ports:
       - 127.0.0.1:5901:5900
   wdio:
@@ -58,6 +63,8 @@ services:
       - PLATFORM_VERSION
       - DEVICE_NAME
       - ORIENTATION
+      - MACOS_ASSETS_DIR=$PWD/assets/
+      - WINDOWS_ASSETS_DIR
     volumes:
       - .:/opt:ro
       - ./reports:/opt/reports

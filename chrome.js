@@ -18,7 +18,7 @@ exports.config = Object.assign({}, require('./hooks'), {
   mochaOpts: {
     timeout: 60000
   },
-  specs: ['test/**/*.js'],
+  specs: ['test/specs/**/*.js'],
   maximizeWindow: true,
   screenshots: {
     saveOnFail: true
@@ -29,6 +29,7 @@ exports.config = Object.assign({}, require('./hooks'), {
     startDelay: 500,
     stopDelay: 500
   },
+  assetsDir: '/home/webdriver/assets/',
   mailhog: {
     host: 'mailhog'
   },

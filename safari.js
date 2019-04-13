@@ -13,5 +13,6 @@ exports.config = Object.assign({}, require('./chrome').config, {
     inputFormat: 'mjpeg',
     startDelay: 500,
     stopDelay: 500
-  }
+  },
+  assetsDir: process.env.MACOS_ASSETS_DIR
 })

@@ -29,5 +29,6 @@ exports.config = Object.assign({}, require('./chrome').config, {
     startDelay: 500,
     stopDelay: 500
   },
-  maximizeWindow: false
+  maximizeWindow: false,
+  assetsDir: null
 })
