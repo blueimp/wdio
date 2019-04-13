@@ -36,11 +36,15 @@
       textarea {
         padding: 6px 12px;
       }
+      ::-webkit-file-upload-button {
+        font: inherit;
+        -webkit-appearance: button;
+      }
     </style>
   </head>
   <body>
     <div>
-      <form action="/" method="POST">
+      <form action="/" method="POST" enctype="multipart/form-data">
         <p>
           <label for="recipient">To</label><br />
           <input
@@ -57,7 +61,10 @@
         </p>
         <p>
           <label for="content">Message</label><br />
-          <textarea name="content" id="content" rows="6"></textarea>
+          <textarea name="content" id="content" rows="5"></textarea>
+        </p>
+        <p>
+          <input type="file" name="attachments" id="attachments" multiple />
         </p>
         <p><button type="submit" id="submit">Send mail</button></p>
       </form>

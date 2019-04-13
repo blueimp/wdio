@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 
 import cgi
+import ntpath
 import os
 import signal
 import smtplib
-from email.message import EmailMessage
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from http import HTTPStatus
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
@@ -18,14 +21,27 @@ HTML_DIR = os.path.dirname(__file__) + '/html'
 class MailRequestHandler(SimpleHTTPRequestHandler):
 
     def send_mail(self, **kwargs):
-        msg = EmailMessage()
+        msg = MIMEMultipart()
         msg['From'] = SENDER
         msg['To'] = kwargs.get('recipient', '')
         msg['Subject'] = kwargs.get('subject', '')
-        msg.set_content(kwargs.get('content', ''))
-        s = smtplib.SMTP(SMTP_HOST)
-        s.send_message(msg)
-        s.quit()
+        msg.attach(MIMEText(kwargs.get('content', '')))
+        for attachment in kwargs.get('attachments', []):
+            if not attachment.filename:
+                break
+            part = MIMEApplication(attachment.file.read())
+            if attachment.type:
+                part.set_type(attachment.type)
+            part.add_header(
+                'Content-Disposition',
+                'attachment',
+                # Remove Windows directory path added by IE:
+                filename=ntpath.basename(attachment.filename)
+            )
+            msg.attach(part)
+        smtp = smtplib.SMTP(SMTP_HOST)
+        smtp.send_message(msg)
+        smtp.quit()
 
     def get_form_data(self):
         return cgi.FieldStorage(
@@ -43,10 +59,18 @@ class MailRequestHandler(SimpleHTTPRequestHandler):
             return None
         try:
             form = self.get_form_data()
+            if 'attachments' in form:
+                if type(form['attachments']) is list:
+                    attachments = form['attachments']
+                else:
+                    attachments = [form['attachments']]
+            else:
+                attachments = []
             self.send_mail(
                 recipient=form.getfirst('recipient', ''),
                 subject=form.getfirst('subject', ''),
-                content=form.getfirst('content', '')
+                content=form.getfirst('content', ''),
+                attachments=attachments
             )
             self.send_response(HTTPStatus.FOUND)
             self.send_header('Location', SENT_URL)
