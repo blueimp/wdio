@@ -20,9 +20,15 @@ class Mail {
   get back() {
     return $('#back').$('a')
   }
+  get logoutButton() {
+    return $('#logout')
+  }
+  get password() {
+    return $('#password')
+  }
   /**
    * Opens the mail form.
-   * @param {Number} timeout Wait timeout
+   * @param {Number} [timeout] Wait timeout
    * @returns {Mail}
    */
   open(timeout) {
@@ -36,7 +42,7 @@ class Mail {
    * @param {String} [subject] Mail subject
    * @param {String} [content] Mail text content
    * @param {Array<String>} [attachments] Mail attachments
-   * @param {Number} timeout Wait timeout
+   * @param {Number} [timeout] Wait timeout
    * @returns {Mail}
    */
   send(recipient, subject, content, attachments, timeout) {
@@ -50,12 +56,22 @@ class Mail {
   }
   /**
    * Returns to the mail form.
-   * @param {Number} timeout Wait timeout
+   * @param {Number} [timeout] Wait timeout
    * @returns {Mail}
    */
   return(timeout) {
     this.back.click()
     this.recipient.waitForExist(timeout)
+    return this
+  }
+  /**
+   * Performs signout.
+   * @param {Number} [timeout] Wait timeout
+   * @returns {Mail}
+   */
+  logout(timeout) {
+    this.logoutButton.click()
+    this.password.waitForExist(timeout)
     return this
   }
 }

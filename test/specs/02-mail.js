@@ -1,7 +1,13 @@
+const config = require('../')
+const Login = require('../pages/login')
 const Mail = require('../pages/mail')
 
 describe('Mail', () => {
-  it('requires fields', () => {
+  it('logs in', () => {
+    Login.open().authenticate(config.user.email, config.user.password)
+  })
+
+  it('requires recipient', () => {
     Mail.open()
     should.Throw(() => Mail.send('', null, null, null, 500))
     browser.getTitle().should.equal('Send mail')
@@ -18,7 +24,6 @@ describe('Mail', () => {
     browser.getTitle().should.equal('Mail sent!')
     browser.saveAndDiffScreenshot('Mail sent')
     Mail.return()
-    browser.getTitle().should.equal('Send mail')
     browser.mailhog('latestTo', recipient).text.should.equal(content)
   })
 })

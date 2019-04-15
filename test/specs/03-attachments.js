@@ -1,8 +1,14 @@
+const config = require('../')
+const Login = require('../pages/login')
 const Mail = require('../pages/mail')
 const assetsDir = browser.config.assetsDir
 
 describe('Attachments', () => {
   if (!assetsDir) return
+
+  it('logs in', () => {
+    Login.open().authenticate(config.user.email, config.user.password)
+  })
 
   it('sends one', () => {
     const recipient = uuidv4() + '@example.org'
