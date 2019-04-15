@@ -6,16 +6,13 @@ services:
     ports:
       - 127.0.0.1:8025:8025
   example:
-    image: python:alpine
-    command: /srv/server.py
-    user: nobody
+    build: ./src
     read_only: true
     tmpfs: /tmp
     environment:
-      - PYTHONUNBUFFERED=1
       - SMTP_HOST=mailhog:1025
     volumes:
-      - ./src:/srv:ro
+      - ./src/html:/srv/html:ro
     ports:
       - 127.0.0.1:8080:8080
       - ${SERVER_HOST:-127.0.0.1}:${SERVER_PORT-}:8080
