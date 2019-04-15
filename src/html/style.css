@@ -1,0 +1,35 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  margin: 0;
+}
+div {
+  max-width: 600px;
+  margin: auto;
+  padding: 0 16px;
+}
+label {
+  display: inline-block;
+  margin-bottom: 2px;
+}
+button,
+input,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 6px 12px;
+}
+input[type='file'] {
+  padding: 0;
+  border: none;
+}
+::-webkit-file-upload-button {
+  font: inherit;
+  -webkit-appearance: button;
+}
