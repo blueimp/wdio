@@ -6,7 +6,7 @@ exports.config = Object.assign({}, require('./hooks'), {
       // Set maxInstances to 1 if screen recordings are enabled:
       // maxInstances: 1,
       browserName: 'chrome',
-      chromeOptions: {
+      'goog:chromeOptions': {
         // Disable headless mode if screen recordings are enabled:
         args: ['--headless', '--window-size=1440,900']
       }
