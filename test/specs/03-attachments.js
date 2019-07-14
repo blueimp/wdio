@@ -1,3 +1,7 @@
+'use strict'
+
+/* global browser, describe, it, uuidv4 */
+
 const config = require('../')
 const Login = require('../pages/login')
 const Mail = require('../pages/mail')

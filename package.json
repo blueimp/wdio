@@ -1,0 +1,17 @@
+{
+  "name": "@blueimp/wdio",
+  "version": "0.0.0",
+  "private": true,
+  "devDependencies": {
+    "eslint": "6",
+    "eslint-config-blueimp": "1",
+    "eslint-config-prettier": "6",
+    "eslint-plugin-jsdoc": "15",
+    "eslint-plugin-node": "9",
+    "eslint-plugin-prettier": "3",
+    "prettier": "1"
+  },
+  "scripts": {
+    "test": "eslint ."
+  }
+}

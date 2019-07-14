@@ -1,3 +1,5 @@
+'use strict'
+
 const orientation = process.env.ORIENTATION || 'PORTRAIT' // LANDSCAPE|PORTRAIT
 
 exports.config = Object.assign({}, require('./chrome').config, {

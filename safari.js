@@ -1,3 +1,5 @@
+'use strict'
+
 exports.config = Object.assign({}, require('./chrome').config, {
   // Docker for Mac host address:
   hostname: 'host.docker.internal',
