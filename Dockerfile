@@ -10,23 +10,22 @@ RUN apk --no-cache add \
     android-tools@edgetesting \
   && npm install -g \
     npm@latest \
-    @wdio/cli@^5.10.8 \
-    @wdio/local-runner@^5.10.8 \
-    @wdio/mocha-framework@^5.10.8 \
-    @wdio/spec-reporter@^5.9.3 \
-    @wdio/sync@^5.10.8 \
-    chai@^4.2.0 \
-    mailhog@^4.1.0 \
-    uuid@^3.3.2 \
-    wdio-screen-commands@^2.6.0 \
-    webdriverio@^5.10.8 \
   # Clean up obsolete files:
   && rm -rf \
     /tmp/* \
     /root/.npm
 
-# Set NODE_PATH to be able to require globally installed packages:
-ENV NODE_PATH=/usr/lib/node_modules
+WORKDIR /usr/lib/wdio
+COPY package.json package-lock.json ./
+RUN npm install --production \
+  # Clean up obsolete files:
+  && rm -rf \
+    /tmp/* \
+    /root/.npm
+# Set NODE_PATH to be able to require installed packages:
+ENV NODE_PATH=/usr/lib/wdio/node_modules
+# Extend path to be able to run installed binaries:
+ENV PATH=$PATH:/usr/lib/wdio/node_modules/.bin
 
 # Avoid permission issues with host mounts by assigning a user/group with
 # uid/gid 1000 (usually the ID of the first user account on GNU/Linux):
