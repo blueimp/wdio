@@ -23,6 +23,19 @@
     "eslint-plugin-prettier": "3",
     "prettier": "1"
   },
+  "eslintConfig": {
+    "extends": [
+      "blueimp",
+      "plugin:jsdoc/recommended",
+      "plugin:node/recommended",
+      "plugin:prettier/recommended"
+    ]
+  },
+  "prettier": {
+    "proseWrap": "always",
+    "semi": false,
+    "singleQuote": true
+  },
   "scripts": {
     "test": "eslint ."
   }
