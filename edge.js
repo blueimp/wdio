@@ -1,3 +1,5 @@
+'use strict'
+
 exports.config = Object.assign({}, require('./chrome').config, {
   hostname: process.env.WINDOWS_HOST || 'host.docker.internal',
   capabilities: [

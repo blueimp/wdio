@@ -1,3 +1,8 @@
+'use strict'
+
+/* global browser, $ */
+/* eslint-disable class-methods-use-this */
+
 class Mail {
   get recipient() {
     return $('#recipient')
@@ -28,8 +33,9 @@ class Mail {
   }
   /**
    * Opens the mail form.
-   * @param {Number} [timeout] Wait timeout
-   * @returns {Mail}
+   *
+   * @param {number} [timeout] Wait timeout
+   * @returns {Mail} Mail object
    */
   open(timeout) {
     browser.url('/')
@@ -38,12 +44,13 @@ class Mail {
   }
   /**
    * Sends mail.
-   * @param {String} recipient Mail recipient
-   * @param {String} [subject] Mail subject
-   * @param {String} [content] Mail text content
-   * @param {Array<String>} [attachments] Mail attachments
-   * @param {Number} [timeout] Wait timeout
-   * @returns {Mail}
+   *
+   * @param {string} recipient Mail recipient
+   * @param {string} [subject] Mail subject
+   * @param {string} [content] Mail text content
+   * @param {Array<string>} [attachments] Mail attachments
+   * @param {number} [timeout] Wait timeout
+   * @returns {Mail} Mail object
    */
   send(recipient, subject, content, attachments, timeout) {
     this.recipient.setValue(recipient)
@@ -56,8 +63,9 @@ class Mail {
   }
   /**
    * Returns to the mail form.
-   * @param {Number} [timeout] Wait timeout
-   * @returns {Mail}
+   *
+   * @param {number} [timeout] Wait timeout
+   * @returns {Mail} Mail object
    */
   return(timeout) {
     this.back.click()
@@ -66,8 +74,9 @@ class Mail {
   }
   /**
    * Performs signout.
-   * @param {Number} [timeout] Wait timeout
-   * @returns {Mail}
+   *
+   * @param {number} [timeout] Wait timeout
+   * @returns {Mail} Mail object
    */
   logout(timeout) {
     this.logoutButton.click()

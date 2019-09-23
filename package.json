@@ -1,0 +1,42 @@
+{
+  "name": "@blueimp/wdio",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@wdio/cli": "5",
+    "@wdio/local-runner": "5",
+    "@wdio/mocha-framework": "5",
+    "@wdio/spec-reporter": "5",
+    "@wdio/sync": "5",
+    "chai": "4",
+    "mailhog": "4",
+    "uuid": "3",
+    "wdio-screen-commands": "2",
+    "webdriverio": "5"
+  },
+  "devDependencies": {
+    "eslint": "6",
+    "eslint-config-blueimp": "1",
+    "eslint-config-prettier": "6",
+    "eslint-plugin-jsdoc": "15",
+    "eslint-plugin-node": "9",
+    "eslint-plugin-prettier": "3",
+    "prettier": "1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "blueimp",
+      "plugin:jsdoc/recommended",
+      "plugin:node/recommended",
+      "plugin:prettier/recommended"
+    ]
+  },
+  "prettier": {
+    "proseWrap": "always",
+    "semi": false,
+    "singleQuote": true
+  },
+  "scripts": {
+    "test": "eslint ."
+  }
+}

@@ -1,3 +1,5 @@
+'use strict'
+
 exports.config = Object.assign({}, require('./chrome').config, {
   hostname: 'geckodriver',
   capabilities: [

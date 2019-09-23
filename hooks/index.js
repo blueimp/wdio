@@ -1,5 +1,7 @@
 'use strict'
 
+/* global browser */
+
 const cmds = require('wdio-screen-commands')
 
 module.exports = {
@@ -7,9 +9,7 @@ module.exports = {
     global.should = require('chai').should()
     global.uuidv4 = require('uuid/v4')
     const mailhog = require('mailhog')(browser.config.mailhog)
-    browser.addCommand('mailhog', async (cmd, ...args) => {
-      return mailhog[cmd].call(mailhog, args)
-    })
+    browser.addCommand('mailhog', (cmd, ...args) => mailhog[cmd](...args))
     browser.addCommand('saveScreenshotByName', cmds.saveScreenshotByName)
     browser.addCommand('saveAndDiffScreenshot', cmds.saveAndDiffScreenshot)
     if (browser.config.appium) browser.updateSettings(browser.config.appium)

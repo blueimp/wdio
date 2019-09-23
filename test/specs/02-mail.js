@@ -1,3 +1,8 @@
+'use strict'
+
+/* global browser, describe, it, should, uuidv4 */
+/* eslint-disable new-cap */
+
 const config = require('../')
 const Login = require('../pages/login')
 const Mail = require('../pages/mail')

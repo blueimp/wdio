@@ -1,3 +1,8 @@
+'use strict'
+
+/* global browser, $ */
+/* eslint-disable class-methods-use-this */
+
 class Login {
   get email() {
     return $('#email')
@@ -13,8 +18,9 @@ class Login {
   }
   /**
    * Opens the login form.
-   * @param {Number} [timeout] Wait timeout
-   * @returns {Login}
+   *
+   * @param {number} [timeout] Wait timeout
+   * @returns {Login} Login object
    */
   open(timeout) {
     browser.url('/login.html')
@@ -23,10 +29,11 @@ class Login {
   }
   /**
    * Authenticates user.
-   * @param {String} email User email
-   * @param {String} password User password
-   * @param {Number} [timeout] Wait timeout
-   * @returns {Login}
+   *
+   * @param {string} email User email
+   * @param {string} password User password
+   * @param {number} [timeout] Wait timeout
+   * @returns {Login} Login object
    */
   authenticate(email, password, timeout) {
     this.email.setValue(email)
