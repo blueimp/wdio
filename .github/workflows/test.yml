@@ -1,0 +1,67 @@
+name: Test
+
+on: [push]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: npm install
+        run: npm install
+        env:
+          CI: true
+      - name: npm test
+        run: npm test
+        env:
+          CI: true
+
+  wdio-chrome:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: chmod
+        run: chmod -R 777 reports
+      - name: docker-compose build
+        run: docker-compose build
+      - name: wdio chrome
+        run: docker-compose run --rm wdio
+      - name: docker-compose logs
+        if: always()
+        run: docker-compose logs example
+      - name: docker-compose down
+        if: always()
+        run: docker-compose down -v
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@master
+        with:
+          name: reports
+          path: reports
+
+  wdio-firefox:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: chmod
+        run: chmod -R 777 reports
+      - name: docker-compose build
+        run: docker-compose build
+      - name: wdio firefox
+        run: docker-compose run --rm wdio firefox
+      - name: docker-compose logs
+        if: always()
+        run: docker-compose logs example
+      - name: docker-compose down
+        if: always()
+        run: docker-compose down -v
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@master
+        with:
+          name: reports
+          path: reports
