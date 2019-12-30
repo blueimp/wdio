@@ -27,7 +27,7 @@ and Microsoft Edge on Windows 10.
 Run the tests with Chrome:
 
 ```sh
-docker-compose run --rm wdio [chrome]
+docker-compose run --rm wdio [chrome.js]
 ```
 
 Connect to Chrome via VNC:
@@ -45,7 +45,7 @@ mode in [chrome.js](chrome.js).
 Run the tests with Firefox:
 
 ```sh
-docker-compose run --rm wdio firefox
+docker-compose run --rm wdio firefox.js
 ```
 
 Connect to Firefox via VNC:
@@ -82,7 +82,7 @@ To run the tests with Safari on MacOS, follow these steps:
 
 5. Run the tests with Safari:
    ```sh
-   docker-compose run --rm wdio safari
+   docker-compose run --rm wdio safari.js
    ```
 
 ### Mobile Safari
@@ -134,14 +134,14 @@ To run the tests with Mobile Safari on iOS Simulator, follow these steps:
 8. Run the tests with Mobile Safari:
 
    ```sh
-   docker-compose run --rm wdio mobile-safari
+   docker-compose run --rm wdio mobile-safari.js
    ```
 
    To run the tests in landscape orientation, provide the `ORIENTATION`
    environment variable:
 
    ```sh
-   ORIENTATION=LANDSCAPE docker-compose run --rm wdio mobile-safari
+   ORIENTATION=LANDSCAPE docker-compose run --rm wdio mobile-safari.js
    ```
 
    To use a different iOS device than defined in the config, provide the
@@ -149,14 +149,14 @@ To run the tests with Mobile Safari on iOS Simulator, follow these steps:
 
    ```sh
    DEVICE_NAME='iPad Pro (11-inch)' \
-    docker-compose run --rm wdio mobile-safari
+    docker-compose run --rm wdio mobile-safari.js
    ```
 
    To use a different iOS version than defined in the config, provide the
    `PLATFORM_VERSION` environment variable:
 
    ```sh
-   PLATFORM_VERSION=12.1 docker-compose run --rm wdio mobile-safari
+   PLATFORM_VERSION=12.1 docker-compose run --rm wdio mobile-safari.js
    ```
 
 ### Mobile Chrome
@@ -217,14 +217,14 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
 8. Run the tests with Mobile Chrome:
 
    ```sh
-   docker-compose run --rm wdio mobile-chrome
+   docker-compose run --rm wdio mobile-chrome.js
    ```
 
    To run the tests in landscape orientation, provide the `ORIENTATION`
    environment variable:
 
    ```sh
-   ORIENTATION=LANDSCAPE docker-compose run --rm wdio mobile-chrome
+   ORIENTATION=LANDSCAPE docker-compose run --rm wdio mobile-chrome.js
    ```
 
 ### Internet Explorer
@@ -289,7 +289,7 @@ To run the tests with Internet Explorer, follow these steps:
 
 8. Run the tests with Internet Explorer:
    ```sh
-   docker-compose run --rm wdio ie
+   docker-compose run --rm wdio ie.js
    ```
 
 ### Microsoft Edge
@@ -344,7 +344,7 @@ To run the tests with Microsoft Edge, follow these steps:
 
 6. Run the tests with Microsoft Edge:
    ```sh
-   docker-compose run --rm wdio edge
+   docker-compose run --rm wdio edge.js
    ```
 
 ### Shutdown
