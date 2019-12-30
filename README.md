@@ -148,7 +148,8 @@ To run the tests with Mobile Safari on iOS Simulator, follow these steps:
    `DEVICE_NAME` environment variable:
 
    ```sh
-   DEVICE_NAME='iPad Air' docker-compose run --rm wdio mobile-safari
+   DEVICE_NAME='iPad Pro (11-inch)' \
+    docker-compose run --rm wdio mobile-safari
    ```
 
    To use a different iOS version than defined in the config, provide the
