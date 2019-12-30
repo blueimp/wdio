@@ -41,6 +41,7 @@
     "singleQuote": true
   },
   "scripts": {
-    "test": "eslint ."
+    "pretest": "eslint . && tsc",
+    "test": "docker-compose run --rm wdio"
   }
 }
