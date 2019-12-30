@@ -1,6 +1,6 @@
 'use strict'
 
-/* global browser, describe, it, should, uuidv4 */
+/* global browser, describe, it, Should, uuidv4 */
 /* eslint-disable new-cap */
 
 const config = require('../')
@@ -14,7 +14,7 @@ describe('Mail', () => {
 
   it('requires recipient', () => {
     Mail.open()
-    should.Throw(() => Mail.send('', null, null, null, 500))
+    Should.Throw(() => Mail.send('', null, null, null, 500))
     browser.getTitle().should.equal('Send mail')
   })
 
@@ -29,6 +29,6 @@ describe('Mail', () => {
     browser.getTitle().should.equal('Mail sent!')
     browser.saveAndDiffScreenshot('Mail sent')
     Mail.return()
-    browser.mailhog('latestTo', recipient).text.should.equal(content)
+    browser.latestMailTo(recipient).text.should.equal(content)
   })
 })

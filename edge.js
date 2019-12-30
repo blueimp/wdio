@@ -1,6 +1,8 @@
 'use strict'
 
-exports.config = Object.assign({}, require('./chrome').config, {
+/* eslint-disable jsdoc/valid-types */
+/** @type WebdriverIO.Config */
+const config = {
   hostname: process.env.WINDOWS_HOST || 'host.docker.internal',
   capabilities: [
     {
@@ -20,4 +22,6 @@ exports.config = Object.assign({}, require('./chrome').config, {
   // Disable file uploads as element.addValue() is broken for Edge webdriver:
   // > JSON format error: parameters object must contain pair with name "text"
   assetsDir: null
-})
+}
+
+exports.config = Object.assign({}, require('./chrome').config, config)

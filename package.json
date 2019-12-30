@@ -11,17 +11,21 @@
     "chai": "4",
     "mailhog": "4",
     "uuid": "3",
-    "wdio-screen-commands": "2",
-    "webdriverio": "5"
+    "wdio-screen-commands": "4"
   },
   "devDependencies": {
+    "@types/chai": "4",
+    "@types/mocha": "5",
+    "@types/node": "13",
+    "@types/uuid": "3",
     "eslint": "6",
     "eslint-config-blueimp": "1",
     "eslint-config-prettier": "6",
-    "eslint-plugin-jsdoc": "15",
-    "eslint-plugin-node": "9",
+    "eslint-plugin-jsdoc": "18",
+    "eslint-plugin-node": "11",
     "eslint-plugin-prettier": "3",
-    "prettier": "1"
+    "prettier": "1",
+    "typescript": "3"
   },
   "eslintConfig": {
     "extends": [

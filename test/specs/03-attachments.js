@@ -1,6 +1,6 @@
 'use strict'
 
-/* global browser, describe, it, uuidv4 */
+/* global browser, describe, it, uuidv4, BufferEncoding */
 
 const config = require('../')
 const Login = require('../pages/login')
@@ -19,12 +19,16 @@ describe('Attachments', () => {
     Mail.open().send(recipient, 'One attachment', null, [
       assetsDir + 'black-80x60.gif'
     ])
-    const mail = browser.mailhog('latestTo', recipient)
+    const mail = browser.latestMailTo(recipient)
     mail.attachments.length.should.equal(1)
     const attachment = mail.attachments[0]
     attachment.name.should.equal('black-80x60.gif')
     attachment.type.should.equal('image/gif')
-    Buffer.from(attachment.Body, attachment.encoding)
+    Buffer.from(
+      attachment.Body,
+      /** @type {BufferEncoding} */
+      (attachment.encoding)
+    )
       .toString('base64')
       .should.equal(
         'R0lGODdhUAA8AIABAAAAAP///ywAAAAAUAA8AAACS4SPqcvtD6OctNqLs968+w+G4kiW' +
@@ -39,12 +43,16 @@ describe('Attachments', () => {
       assetsDir + 'black-80x60.gif',
       assetsDir + 'white-1x2.jpg'
     ])
-    const mail = browser.mailhog('latestTo', recipient)
+    const mail = browser.latestMailTo(recipient)
     mail.attachments.length.should.equal(2)
     const attachment1 = mail.attachments[0]
     attachment1.name.should.equal('black-80x60.gif')
     attachment1.type.should.equal('image/gif')
-    Buffer.from(attachment1.Body, attachment1.encoding)
+    Buffer.from(
+      attachment1.Body,
+      /** @type {BufferEncoding} */
+      (attachment1.encoding)
+    )
       .toString('base64')
       .should.equal(
         'R0lGODdhUAA8AIABAAAAAP///ywAAAAAUAA8AAACS4SPqcvtD6OctNqLs968+w+G4kiW' +
@@ -54,7 +62,11 @@ describe('Attachments', () => {
     const attachment2 = mail.attachments[1]
     attachment2.name.should.equal('white-1x2.jpg')
     attachment2.type.should.equal('image/jpeg')
-    Buffer.from(attachment2.Body, attachment2.encoding)
+    Buffer.from(
+      attachment2.Body,
+      /** @type {BufferEncoding} */
+      (attachment2.encoding)
+    )
       .toString('base64')
       .should.equal(
         '/9j/4AAQSkZJRgABAQEAYABgAAD/4QAiRXhpZgAASUkqAAgAAAABABIBAwABAAAABgAS' +

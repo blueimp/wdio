@@ -2,7 +2,9 @@
 
 const orientation = process.env.ORIENTATION || 'PORTRAIT' // LANDSCAPE|PORTRAIT
 
-exports.config = Object.assign({}, require('./chrome').config, {
+/* eslint-disable jsdoc/valid-types */
+/** @type WebdriverIO.Config */
+const config = {
   // Docker for Mac host address:
   hostname: 'host.docker.internal',
   // Appium port:
@@ -33,4 +35,6 @@ exports.config = Object.assign({}, require('./chrome').config, {
   },
   maximizeWindow: false,
   assetsDir: null
-})
+}
+
+exports.config = Object.assign({}, require('./chrome').config, config)

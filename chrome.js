@@ -1,6 +1,8 @@
 'use strict'
 
-exports.config = Object.assign({}, require('./hooks'), {
+/* eslint-disable jsdoc/valid-types */
+/** @type WebdriverIO.Config */
+const config = {
   hostname: 'chromedriver',
   path: '/',
   capabilities: [
@@ -36,4 +38,6 @@ exports.config = Object.assign({}, require('./hooks'), {
     host: 'mailhog'
   },
   baseUrl: 'http://example:8080'
-})
+}
+
+exports.config = Object.assign({}, require('./hooks'), config)

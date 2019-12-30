@@ -1,6 +1,6 @@
 'use strict'
 
-/* global browser, describe, it, should */
+/* global browser, describe, it, Should */
 /* eslint-disable new-cap */
 
 const config = require('../')
@@ -9,19 +9,19 @@ const Mail = require('../pages/mail')
 
 describe('Session', () => {
   it('requires login', () => {
-    should.Throw(() => Mail.open(500))
+    Should.Throw(() => Mail.open(500))
     browser.getTitle().should.equal('Login')
   })
 
   it('requires email', () => {
     Login.open()
-    should.Throw(() => Login.authenticate('', config.user.password, 500))
+    Should.Throw(() => Login.authenticate('', config.user.password, 500))
     browser.getTitle().should.equal('Login')
   })
 
   it('requires password', () => {
     Login.open()
-    should.Throw(() => Login.authenticate(config.user.email, '', 500))
+    Should.Throw(() => Login.authenticate(config.user.email, '', 500))
     browser.getTitle().should.equal('Login')
   })
 
@@ -35,7 +35,7 @@ describe('Session', () => {
 
   it('logs out', () => {
     Mail.open().logout()
-    should.Throw(() => Mail.open(500))
+    Should.Throw(() => Mail.open(500))
     browser.getTitle().should.equal('Login')
   })
 })
