@@ -58,7 +58,19 @@ open vnc://user:secret@localhost:5901
 
 To run the tests with Safari on MacOS, follow these steps:
 
-1. [Configure Safari to Enable WebDriver Support](https://developer.apple.com/documentation/webkit/testing_with_webdriver_in_safari#2957277).
+1. Configure Safari to Enable WebDriver Support (see
+   [Testing with WebDriver in Safari](https://developer.apple.com/documentation/webkit/testing_with_webdriver_in_safari)):
+
+   ```
+   safaridriver --enable
+   ```
+
+   For
+   [Safari Technology Preview](https://developer.apple.com/safari/technology-preview/):
+
+   ```
+   /Applications/Safari Technology Preview.app/Contents/MacOS/safaridriver --enable
+   ```
 
 2. Download and install [MJPEG Server](https://github.com/blueimp/mjpeg-server)
    as `mjpeg-server` in your `PATH` and install [FFmpeg](https://ffmpeg.org/)
@@ -77,8 +89,20 @@ To run the tests with Safari on MacOS, follow these steps:
 4. Start `safaridriver` and `mjpeg-server` with the provided helper script:
 
    ```sh
-   bin/safaridriver.sh [screen index]
+   bin/safaridriver.sh [-t] [screen index]
    ```
+
+   Providing the `-t` argument starts the `safaridriver` for
+   [Safari Technology Preview](https://developer.apple.com/safari/technology-preview/).
+
+   Providing a number as screen index (e.g. `2`) allows to use a different
+   capture screen. Running the command without this argument will display a list
+   of available screens if there are more than one available.
+
+   **Please Note:**  
+   The Terminal application the `mjpeg-server` command is started from requires
+   Screen Recording permissions:  
+   System Preferences => Security & Privacy => Privacy => Screen Recording
 
 5. Run the tests with Safari:
    ```sh
