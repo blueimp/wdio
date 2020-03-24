@@ -24,7 +24,7 @@
     "eslint-plugin-jsdoc": "22",
     "eslint-plugin-node": "11",
     "eslint-plugin-prettier": "3",
-    "prettier": "1",
+    "prettier": "2",
     "typescript": "3"
   },
   "eslintConfig": {
@@ -36,9 +36,11 @@
     ]
   },
   "prettier": {
+    "arrowParens": "avoid",
     "proseWrap": "always",
     "semi": false,
-    "singleQuote": true
+    "singleQuote": true,
+    "trailingComma": "none"
   },
   "scripts": {
     "pretest": "eslint . && tsc",
