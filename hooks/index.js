@@ -9,7 +9,7 @@ const cmds = require('wdio-screen-commands')
 const config = {
   before: async () => {
     global.Should = require('chai').should()
-    global.uuidv4 = require('uuid/v4')
+    global.uuidv4 = require('uuid').v4
     const mailhog = require('mailhog')(browser.config.mailhog)
     browser.addCommand('getMail', mailhog.messages)
     browser.addCommand('searchMail', mailhog.search)
