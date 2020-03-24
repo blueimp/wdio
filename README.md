@@ -190,6 +190,19 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
 1. Download [Android Studio](https://developer.android.com/studio/) and on first
    start, follow the instructions to install the Android SDK and Emulator.
 
+   **Please Note:**  
+   To be able to use a custom `/etc/hosts` file requires mounting the root file
+   system as writable, which requires a supported system image for the Android
+   Virtual Device (AVD), e.g.:
+
+   > Android 9 "Pie" (Google APIs)
+
+   System images for Android 10 "Q" or system images including the Google Play
+   store do not support mounting the root file system as writable.  
+   See also John Wu's
+   [Twitter post](https://twitter.com/topjohnwu/status/1170404631865778177) on
+   Android 10's file system format.
+
 2. Add the following lines to your `~/.profile` to make the JDK included in
    Android Studio and the installed Android SDK available to
    [Appium](https://appium.io/):
