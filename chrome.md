@@ -1,0 +1,17 @@
+### Chrome
+
+Run the tests with Chrome:
+
+```sh
+docker-compose run --rm wdio [chrome.js]
+```
+
+Connect to Chrome via VNC:
+
+```sh
+open vnc://user:secret@localhost:5900
+```
+
+**Please Note:**  
+To be able to see Chrome running via VNC or screen recordings, disable headless
+mode in [chrome.js](chrome.js).

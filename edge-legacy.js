@@ -17,10 +17,9 @@ const config = {
     startDelay: 500,
     stopDelay: 500
   },
-  // Disable maximizeWindow since it is broken for Edge webdriver
+  // Disable maximizeWindow since it is broken for Edge Legacy webdriver:
   maximizeWindow: false,
-  // Disable file uploads as element.addValue() is broken for Edge webdriver:
-  // > JSON format error: parameters object must contain pair with name "text"
+  // Disable file uploads as Edge Legacy webdriver does not support it:
   assetsDir: null
 }
 
