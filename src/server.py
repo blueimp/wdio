@@ -10,7 +10,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from hashlib import scrypt
 from http import HTTPStatus, cookies
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 
 from itsdangerous import URLSafeTimedSerializer
 
@@ -207,7 +207,7 @@ signal.signal(signal.SIGINT, handle_exit)
 
 try:
     os.chdir(HTML_DIR)
-    server = HTTPServer(('', SERVER_PORT), MailRequestHandler)
+    server = ThreadingHTTPServer(('', SERVER_PORT), MailRequestHandler)
     server.serve_forever()
 except SystemExit:
     server.socket.close()
