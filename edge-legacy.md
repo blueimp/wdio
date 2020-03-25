@@ -1,4 +1,4 @@
-### Microsoft Edge Legacy
+### Edge Legacy
 
 **Please Note:**  
 This guide assumes that a system with Windows 10 has been set up.  
@@ -6,7 +6,7 @@ The scripted installation of
 [MicrosoftWebDriver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
 also requires `17763` as minimum Windows build version.
 
-To run the tests with Microsoft Edge Legacy, follow these steps:
+To run the tests with Edge Legacy, follow these steps:
 
 1. Create a `.env` file in the same directory as
    [docker-compose.yml](docker-compose.yml) and add the following environment
@@ -48,7 +48,7 @@ To run the tests with Microsoft Edge Legacy, follow these steps:
    Allow `nginx` and `MJPEGServer` to communicate on all networks in the Windows
    Defender Firewall dialog.
 
-6. Run the tests with Microsoft Edge Legacy:
+6. Run the tests with Edge Legacy:
    ```sh
    docker-compose run --rm wdio edge-legacy.js
    ```

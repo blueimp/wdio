@@ -4,7 +4,7 @@ Docker setup for [WebdriverIO](https://webdriver.io/) with automatic
 screenshots, image diffing and screen recording support for containerized
 versions of Chrome and Firefox, Safari Mobile and Chrome Mobile via
 [Appium](https://appium.io/) and Safari on MacOS as well as Internet Explorer
-and Microsoft Edge on Windows 10.
+and Edge Legacy on Windows 10.
 
 ## Contents
 
@@ -15,7 +15,7 @@ and Microsoft Edge on Windows 10.
   - [Mobile Safari](mobile-safari.md)
   - [Mobile Chrome](mobile-chrome.md)
   - [Internet Explorer](internet-explorer.md)
-  - [Microsoft Edge Legacy](edge-legacy.md)
+  - [Edge Legacy](edge-legacy.md)
 - [License](#license)
 - [Author](#author)
 
