@@ -32,9 +32,9 @@ $ffmpegOptions = @{
 }
 
 $versions = @{
-  nginx = '1.15.9'
-  IEDriver = '3.141.5'
-  ffmpeg = '4.1.1'
+  nginx = '1.17.9'
+  IEDriver = '3.150.1'
+  ffmpeg = '4.2.2'
   MJPEGServer = '1.2.0'
 }
 
