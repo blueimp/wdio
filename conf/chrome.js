@@ -40,4 +40,4 @@ const config = {
   baseUrl: 'http://example:8080'
 }
 
-exports.config = Object.assign({}, require('./hooks'), config)
+exports.config = Object.assign({}, require('../hooks'), config)

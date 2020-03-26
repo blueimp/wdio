@@ -3,7 +3,7 @@
 Run the tests with Chrome:
 
 ```sh
-docker-compose run --rm wdio [chrome.js]
+docker-compose run --rm wdio [conf/chrome.js]
 ```
 
 Connect to Chrome via VNC:

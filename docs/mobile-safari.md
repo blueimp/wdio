@@ -47,14 +47,14 @@ To run the tests with Mobile Safari on iOS Simulator, follow these steps:
 8. Run the tests with Mobile Safari:
 
    ```sh
-   docker-compose run --rm wdio mobile-safari.js
+   docker-compose run --rm wdio conf/mobile-safari.js
    ```
 
    To run the tests in landscape orientation, provide the `ORIENTATION`
    environment variable:
 
    ```sh
-   ORIENTATION=LANDSCAPE docker-compose run --rm wdio mobile-safari.js
+   ORIENTATION=LANDSCAPE docker-compose run --rm wdio conf/mobile-safari.js
    ```
 
    To use a different iOS device than defined in the config, provide the
@@ -62,12 +62,12 @@ To run the tests with Mobile Safari on iOS Simulator, follow these steps:
 
    ```sh
    DEVICE_NAME='iPad Pro (11-inch)' \
-    docker-compose run --rm wdio mobile-safari.js
+    docker-compose run --rm wdio conf/mobile-safari.js
    ```
 
    To use a different iOS version than defined in the config, provide the
    `PLATFORM_VERSION` environment variable:
 
    ```sh
-   PLATFORM_VERSION=12.1 docker-compose run --rm wdio mobile-safari.js
+   PLATFORM_VERSION=12.1 docker-compose run --rm wdio conf/mobile-safari.js
    ```

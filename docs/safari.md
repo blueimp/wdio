@@ -50,5 +50,5 @@ To run the tests with Safari on MacOS, follow these steps:
 
 5. Run the tests with Safari:
    ```sh
-   docker-compose run --rm wdio safari.js
+   docker-compose run --rm wdio conf/safari.js
    ```

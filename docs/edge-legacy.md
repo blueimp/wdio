@@ -60,5 +60,5 @@ To run the tests with Edge Legacy, follow these steps:
 
 6. Run the tests with Edge Legacy:
    ```sh
-   docker-compose run --rm wdio edge-legacy.js
+   docker-compose run --rm wdio conf/edge-legacy.js
    ```

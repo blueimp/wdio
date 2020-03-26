@@ -61,5 +61,5 @@ To run the tests with Internet Explorer, follow these steps:
 
 8. Run the tests with Internet Explorer:
    ```sh
-   docker-compose run --rm wdio internet-explorer.js
+   docker-compose run --rm wdio conf/internet-explorer.js
    ```

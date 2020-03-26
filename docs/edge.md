@@ -49,5 +49,5 @@ To run the tests with Edge, follow these steps:
 
 6. Run the tests with Edge:
    ```sh
-   docker-compose run --rm wdio edge.js
+   docker-compose run --rm wdio conf/edge.js
    ```

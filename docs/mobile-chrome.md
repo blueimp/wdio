@@ -69,12 +69,12 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
 8. Run the tests with Mobile Chrome:
 
    ```sh
-   docker-compose run --rm wdio mobile-chrome.js
+   docker-compose run --rm wdio conf/mobile-chrome.js
    ```
 
    To run the tests in landscape orientation, provide the `ORIENTATION`
    environment variable:
 
    ```sh
-   ORIENTATION=LANDSCAPE docker-compose run --rm wdio mobile-chrome.js
+   ORIENTATION=LANDSCAPE docker-compose run --rm wdio conf/mobile-chrome.js
    ```
