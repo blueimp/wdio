@@ -17,6 +17,7 @@ Internet Explorer on Windows 10.
   - [Edge](edge.md)
   - [Edge Legacy](edge-legacy.md)
   - [Internet Explorer](internet-explorer.md)
+- [FAQ](FAQ.md)
 - [License](#license)
 - [Author](#author)
 
