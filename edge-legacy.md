@@ -1,10 +1,20 @@
 ### Edge Legacy
 
 **Please Note:**  
-This guide assumes that a system with Windows 10 has been set up.  
-The scripted installation of
-[MicrosoftWebDriver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
-also requires `17763` as minimum Windows build version.
+This guide assumes that a system with Windows 10 and Microsoft Edge Legacy has
+been set up.
+
+Microsoft provides
+[free Windows 10 virtual machines](https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/)
+(that expire after 90 days) that can be used to test IE11 and Microsoft Edge
+Legacy.
+
+To be able to use both the new and legacy Edge on the same machine, please read
+[how to access the old version of Microsoft Edge](https://docs.microsoft.com/en-us/deployedge/microsoft-edge-sysupdate-access-old-edge).
+
+Please also note that the scripted installation of
+[Microsoft WebDriver for Microsoft Edge Legacy](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
+requires `17763` as minimum Windows build version.
 
 To run the tests with Edge Legacy, follow these steps:
 
@@ -45,8 +55,8 @@ To run the tests with Edge Legacy, follow these steps:
    Click "OK" to save the changes to the shortcut.
 
 5. Double-Click on the webdriver shortcut to setup and start the servers.  
-   Allow `nginx` and `MJPEGServer` to communicate on all networks in the Windows
-   Defender Firewall dialog.
+   Allow `Microsoft WebDriver`, `nginx` and `MJPEGServer` to communicate on all
+   networks in the Windows Defender Firewall dialog.
 
 6. Run the tests with Edge Legacy:
    ```sh

@@ -4,24 +4,20 @@
 /** @type WebdriverIO.Config */
 const config = {
   hostname: process.env.WINDOWS_HOST || 'host.docker.internal',
-  port: 4446,
   capabilities: [
     {
-      // MicrosoftWebDriver supports no parallel sessions:
-      maxInstances: 1,
+      // Set maxInstances to 1 if screen recordings are enabled:
+      // maxInstances: 1,
       browserName: 'MicrosoftEdge'
     }
   ],
   videos: {
-    enabled: true,
+    enabled: false,
     inputFormat: 'mjpeg',
     startDelay: 500,
     stopDelay: 500
   },
-  // Disable maximizeWindow since it is broken for Edge Legacy webdriver:
-  maximizeWindow: false,
-  // Disable file uploads as Edge Legacy webdriver does not support it:
-  assetsDir: null
+  assetsDir: process.env.WINDOWS_ASSETS_DIR || process.env.MACOS_ASSETS_DIR
 }
 
 exports.config = Object.assign({}, require('./chrome').config, config)

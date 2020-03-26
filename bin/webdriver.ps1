@@ -1,8 +1,9 @@
 <#
-Installs and starts Webdriver servers for IE and Microsoft Edge on Windows 10.
+Installs and starts Webdriver servers for Edge (New+Legacy) & IE on Windows 10.
 Installs and starts NGINX as reverse proxy for remote Webdriver connections.
 Installs and starts MJPEGServer and FFmpeg for screen recordings.
-Edits registry properties to configure IE and Microsoft Edge.
+Edits registry properties to configure Edge Legacy and IE.
+Updates Windows hosts file with custom entries.
 
 Copyright 2019, Sebastian Tschan
 https://blueimp.net
@@ -40,6 +41,7 @@ $versions = @{
 
 $downloads = @{
   nginx = 'https://nginx.org/download/nginx-{0}.zip' -f $versions.nginx
+  msedgedriver = 'https://msedgedriver.azureedge.net/{0}/edgedriver_win64.zip'
   # Using the 32bit IEDriverServer (64bit version has performance issues).
   # The download URL contains the version number twice.
   # Once as directory with the major.minor version and once in the file name
@@ -74,15 +76,15 @@ events {
 }
 http {
   server {
-    listen 4444;
-    location / {
-      proxy_pass http://localhost:17556;
-    }
-  }
-  server {
     listen 4445;
     location / {
       proxy_pass http://localhost:5555;
+    }
+  }
+  server {
+    listen 4446;
+    location / {
+      proxy_pass http://localhost:17556;
     }
   }
 }
@@ -106,17 +108,17 @@ function Invoke-PowershellAdminCommand {
   Invoke-AdminCommand powershell $params $reason
 }
 
-# Sets a registry DWord property.
+# Sets a registry property.
 # Also creates the parent path if it does not exist:
-function Set-RegistryDWord {
-  param([String]$path, [String]$name, [int]$value)
+function Set-RegistryProperty {
+  param([String]$path, [String]$name, [String]$type, $value)
   $prop = Get-ItemProperty $path $name -ErrorAction SilentlyContinue
   if (!$prop) {
     if (!(Test-Path $path)) {
       # -Force option is required if the parent path does not exist:
       New-Item $path -Force
     }
-    New-ItemProperty $path $name -PropertyType DWord -Value $value
+    New-ItemProperty $path $name -PropertyType $type -Value $value
   } elseif ($prop.$name -ne $value) {
     Set-ItemProperty $path -Name $name $value
   }
@@ -146,25 +148,34 @@ function Edit-CurrentUserRegistry {
   # Explorer it creates:
   $path = 'HKCU:\SOFTWARE\Wow6432Node\Microsoft\Internet Explorer\Main' +
     '\FeatureControl\FEATURE_BFCACHE'
-  Set-RegistryDWord $path iexplore.exe 0
+  Set-RegistryProperty $path iexplore.exe DWord 0
   # Path to IE user settings:
   $path = 'HKCU:\Software\Microsoft\Internet Explorer'
   # Disable IE Compatibility View for Intranet Sites:
-  Set-RegistryDWord "$path\BrowserEmulation" IntranetCompatibilityMode 0
+  Set-RegistryProperty "$path\BrowserEmulation" IntranetCompatibilityMode `
+    DWord 0
   # Disable "Preserve Favorites website data":
-  Set-RegistryDWord "$path\Privacy" UseAllowList 0
+  Set-RegistryProperty "$path\Privacy" UseAllowList DWord 0
   # Clear IE browsing history on exit:
-  Set-RegistryDWord "$path\Privacy" ClearBrowsingHistoryOnExit 1
+  Set-RegistryProperty "$path\Privacy" ClearBrowsingHistoryOnExit DWord 1
   # Disable the IE first run page:
-  Set-RegistryDWord "$path\Main" DisableFirstRunCustomize 1
+  Set-RegistryProperty "$path\Main" DisableFirstRunCustomize DWord 1
+  # Start IE with a blank page:
+  Set-RegistryProperty "$path\Main" 'Start Page' String 'about:blank'
+  # Open new tabs in IE with a blank page:
+  Set-RegistryProperty "$path\TabbedBrowsing" NewTabPageShow DWord 0
   # Path to Microsoft Edge user settings:
   $path = 'HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows' +
     '\CurrentVersion\AppContainer\Storage' +
     '\microsoft.microsoftedge_8wekyb3d8bbwe\MicrosoftEdge'
   # Clear Microsoft Edge browsing history on exit:
-  Set-RegistryDWord "$path\Privacy" ClearBrowsingHistoryOnExit 1
+  Set-RegistryProperty "$path\Privacy" ClearBrowsingHistoryOnExit DWord 1
   # Disable the Microsoft Edge first run page:
-  Set-RegistryDWord "$path\Main" PreventFirstRunPage 1
+  Set-RegistryProperty "$path\Main" PreventFirstRunPage DWord 1
+  # Set tbe Microsoft Edge home page to the new tab page:
+  Set-RegistryProperty "$path\Main" HomeButtonPage String 'about:tabs'
+  # Open new tabs in Microsoft Edge with a blank page:
+  Set-RegistryProperty "$path\ServiceUI" NewTabPageDisplayOption DWord 2
 }
 
 # Overwrites the Windows hosts file with the file windows.hosts, if available:
@@ -194,7 +205,31 @@ function Get-WindowsBuildNumber {
     'CurrentBuild').CurrentBuild
 }
 
-# Installs MicrosoftWebDriver via "Windows Feature on Demand":
+# Returns the Edge version number:
+function Get-EdgeVersion {
+  $path = 'HKLM:\SOFTWARE\Wow6432node\Microsoft\Windows\CurrentVersion' +
+    '\Uninstall\Microsoft Edge'
+  Get-ItemProperty $path -ErrorAction SilentlyContinue |
+    ForEach-Object DisplayVersion
+}
+
+# Installs msedgedriver:
+function Install-EdgeDriver {
+  if (!(Test-Path bin\msedgedriver.exe)) {
+    $version = Get-EdgeVersion
+    if ($version) {
+      $url = $downloads.msedgedriver -f $version
+      New-Item bin -ItemType Directory -Force
+      Clear-Host
+      'Installing Microsoft Edge Driver ...'
+      Invoke-ZipDownload $url
+      Move-Item msedgedriver.exe bin
+      Remove-Item Driver_Notes -Recurse
+    }
+  }
+}
+
+# Installs MicrosoftWebDriver (for Edge Legacy) via "Windows Feature on Demand":
 function Install-MicrosoftWebDriver {
   # Windows versions before build 17763 do not have MicrosoftWebDriver as
   # "Windows Feature on Demand" and only support older Edge versions.
@@ -204,7 +239,7 @@ function Install-MicrosoftWebDriver {
     $capabilityName = 'Microsoft.WebDriver~~~~0.0.1.0'
     Invoke-AdminCommand DISM `
       "/Online /Add-Capability /CapabilityName:$capabilityName" `
-      'for WebDriver installation'
+      'for Edge Legacy WebDriver installation'
   }
 }
 
@@ -280,6 +315,9 @@ function Start-Service {
   'It will close automatically when MJPEGServer is stopped.'
   '========================================================'
   'Starting servers ...'
+  if (Get-Command msedgedriver -ErrorAction SilentlyContinue) {
+    Start-Process msedgedriver '--port=4444 --whitelisted-ips='
+  }
   if (Get-Command MicrosoftWebDriver -ErrorAction SilentlyContinue) {
     Start-Process MicrosoftWebDriver
   }
@@ -292,6 +330,7 @@ function Start-Service {
 Edit-CurrentUserRegistry
 Update-HostsFile
 Install-MicrosoftWebDriver
+Install-EdgeDriver
 Install-IEDriverServer
 Install-NGINX
 Install-FFmpeg
