@@ -7,6 +7,21 @@ const Login = require('../pages/login')
 const Mail = require('../pages/mail')
 const assetsDir = browser.config.assetsDir
 
+const b64DataGIF =
+  'R0lGODlhPAAoAPECAAAAAP///wAAAAAAACH5BAUAAAIALAAAAAA8ACgAQAJihI+Zwe0Po3Sq1o' +
+  'kztvzoDwbdSJbmiaaqGbbTCrjyA9f2jef6Ts6+uPrNYEIZsdg6IkG8pvMJjUqnVOgypLxmstpX' +
+  'sLv9gr2q8UZshnDTjTUbWH7TqvS6/Y7P6/f8vv9vVwAAOw=='
+
+const b64DataJPEG =
+  '/9j/4QAiRXhpZgAATU0AKgAAAAgAAQESAAMAAAABAAYAAAAAAAD/7QA0UGhvdG9zaG9wIDMuMA' +
+  'A4QklNBAQAAAAAABccAgUAC2JsdWVpbXAubmV0HAIAAAIABAD/2wCEAAEBAQEBAQEBAQEBAQEB' +
+  'AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ' +
+  'EBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB' +
+  'AQEBAf/AABEIAAIAAwMBEQACEQEDEQH/xABRAAEAAAAAAAAAAAAAAAAAAAAKEAEBAQADAQEAAA' +
+  'AAAAAAAAAGBQQDCAkCBwEBAAAAAAAAAAAAAAAAAAAAABEBAAAAAAAAAAAAAAAAAAAAAP/aAAwD' +
+  'AQACEQMRAD8AG8T9NfSMEVMhQvoP3fFiRZ+MTHDifa/95OFSZU5OzRzxkyejv8ciEfhSceSXGj' +
+  'S8eSdLnZc2HDm4M3BxcXwH/9k='
+
 describe('Attachments', () => {
   if (!assetsDir) return
 
@@ -17,12 +32,12 @@ describe('Attachments', () => {
   it('sends one', () => {
     const recipient = uuidv4() + '@example.org'
     Mail.open().send(recipient, 'One attachment', null, [
-      assetsDir + 'black-80x60.gif'
+      assetsDir + 'black+white-60x40.gif'
     ])
     const mail = browser.latestMailTo(recipient)
     mail.attachments.length.should.equal(1)
     const attachment = mail.attachments[0]
-    attachment.name.should.equal('black-80x60.gif')
+    attachment.name.should.equal('black+white-60x40.gif')
     attachment.type.should.equal('image/gif')
     Buffer.from(
       attachment.Body,
@@ -30,23 +45,19 @@ describe('Attachments', () => {
       (attachment.encoding)
     )
       .toString('base64')
-      .should.equal(
-        'R0lGODdhUAA8AIABAAAAAP///ywAAAAAUAA8AAACS4SPqcvtD6OctNqLs968+w+G4kiW' +
-          '5omm6sq27gvH8kzX9o3n+s73/g8MCofEovGITCqXzKbzCY1Kp9Sq9YrNarfcrvcLDo' +
-          'vH5PKsAAA7'
-      )
+      .should.equal(b64DataGIF)
   })
 
   it('sends multiple', () => {
     const recipient = uuidv4() + '@example.org'
     Mail.open().send(recipient, 'Multiple attachments', null, [
-      assetsDir + 'black-80x60.gif',
-      assetsDir + 'white-1x2.jpg'
+      assetsDir + 'black+white-60x40.gif',
+      assetsDir + 'black+white-3x2.jpg'
     ])
     const mail = browser.latestMailTo(recipient)
     mail.attachments.length.should.equal(2)
     const attachment1 = mail.attachments[0]
-    attachment1.name.should.equal('black-80x60.gif')
+    attachment1.name.should.equal('black+white-60x40.gif')
     attachment1.type.should.equal('image/gif')
     Buffer.from(
       attachment1.Body,
@@ -54,13 +65,9 @@ describe('Attachments', () => {
       (attachment1.encoding)
     )
       .toString('base64')
-      .should.equal(
-        'R0lGODdhUAA8AIABAAAAAP///ywAAAAAUAA8AAACS4SPqcvtD6OctNqLs968+w+G4kiW' +
-          '5omm6sq27gvH8kzX9o3n+s73/g8MCofEovGITCqXzKbzCY1Kp9Sq9YrNarfcrvcLDo' +
-          'vH5PKsAAA7'
-      )
+      .should.equal(b64DataGIF)
     const attachment2 = mail.attachments[1]
-    attachment2.name.should.equal('white-1x2.jpg')
+    attachment2.name.should.equal('black+white-3x2.jpg')
     attachment2.type.should.equal('image/jpeg')
     Buffer.from(
       attachment2.Body,
@@ -68,22 +75,6 @@ describe('Attachments', () => {
       (attachment2.encoding)
     )
       .toString('base64')
-      .should.equal(
-        '/9j/4AAQSkZJRgABAQEAYABgAAD/4QAiRXhpZgAASUkqAAgAAAABABIBAwABAAAABgAS' +
-          'AAAAAAD/7QAsUGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAA8cAgUACm9iamVjdG5hbW' +
-          'UA/9sAQwABAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB' +
-          'AQEBAQEBAQEBAQEBAQEBAQEBAQEB/9sAQwEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ' +
-          'EBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB/8AAEQgAAQAC' +
-          'AwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAA' +
-          'IBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNi' +
-          'coIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dX' +
-          'Z3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS' +
-          '09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAA' +
-          'ABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXET' +
-          'IjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSl' +
-          'NUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ip' +
-          'qrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAA' +
-          'wDAQACEQMRAD8A/v4ooooA/9k='
-      )
+      .should.equal(b64DataJPEG)
   })
 })
