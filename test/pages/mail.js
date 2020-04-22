@@ -57,6 +57,7 @@ class Mail {
     if (subject) this.subject.setValue(subject)
     if (content) this.content.setValue(content)
     if (attachments) this.attachments.addValue(attachments.join('\n'))
+    this.submit.scrollIntoView()
     this.submit.click()
     this.result.waitForExist(timeout)
     return this
