@@ -44,21 +44,19 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
 5. Install [Appium](https://appium.io/) as global NPM package:
 
    ```sh
-   npm install -g appium [--chromedriver_version=VERSION]
+   npm install -g appium
    ```
-
-   Make sure to configure `appium` with a
-   [Chromedriver](https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/web/chromedriver.md)
-   version compatible with the version of Chrome running in your Android device.
-   If `appium` has already been installed with an incompatible `chromedriver`
-   version, you might want to uninstall and reinstall it with the proper
-   `--chromedriver_version` argument.
 
 6. Start `appium` with the provided helper script:
 
    ```sh
    bin/appium.sh
    ```
+
+   This script is configured for
+   [Automatic discovery of compatible Chromedriver](https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/web/chromedriver.md/#automatic-discovery-of-compatible-chromedriver)
+   and will download a `chromedriver` version compatible with the version of
+   Chrome running on the Android device.
 
 7. Start the Android Virtual Device with a custom `/etc/hosts` file:
 
