@@ -64,6 +64,17 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
    bin/android-emulator.sh -hosts etc/android.hosts
    ```
 
+   **How to update the installed Google Chrome version:**
+
+   - Download a Google Chrome APK (Android Application Package) for the
+     architecture of your emulated device (e.g. `x86`), e.g. from
+     [APK Mirror](https://www.apkmirror.com/apk/google-inc/chrome/).
+   - Drag&drop the APK file into the emulator window to install it or
+     alternatively, install it via command-line:
+     ```sh
+     adb install com.android.chrome_*.apk
+     ```
+
 8. Run the tests with Mobile Chrome:
 
    ```sh
