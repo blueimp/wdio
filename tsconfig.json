@@ -7,6 +7,7 @@
       "node",
       "@wdio/sync",
       "@wdio/mocha-framework",
+      "expect-webdriverio",
       "wdio-screen-commands/types",
       "./types"
     ],

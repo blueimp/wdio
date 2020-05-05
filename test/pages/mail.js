@@ -39,7 +39,7 @@ class Mail {
    */
   open(timeout) {
     browser.url('/')
-    this.recipient.waitForExist(timeout)
+    this.recipient.waitForExist({ timeout })
     return this
   }
   /**
@@ -59,7 +59,7 @@ class Mail {
     if (attachments) this.attachments.addValue(attachments.join('\n'))
     this.submit.scrollIntoView()
     this.submit.click()
-    this.result.waitForExist(timeout)
+    this.result.waitForExist({ timeout })
     return this
   }
   /**
@@ -70,7 +70,7 @@ class Mail {
    */
   return(timeout) {
     this.back.click()
-    this.recipient.waitForExist(timeout)
+    this.recipient.waitForExist({ timeout })
     return this
   }
   /**
@@ -81,7 +81,7 @@ class Mail {
    */
   logout(timeout) {
     this.logoutButton.click()
-    this.password.waitForExist(timeout)
+    this.password.waitForExist({ timeout })
     return this
   }
 }

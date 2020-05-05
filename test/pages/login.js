@@ -24,7 +24,7 @@ class Login {
    */
   open(timeout) {
     browser.url('/login.html')
-    this.password.waitForExist(timeout)
+    this.password.waitForExist({ timeout })
     return this
   }
   /**
@@ -39,7 +39,7 @@ class Login {
     this.email.setValue(email)
     this.password.setValue(password)
     this.submit.click()
-    this.recipient.waitForExist(timeout)
+    this.recipient.waitForExist({ timeout })
     return this
   }
 }

@@ -5,10 +5,9 @@
 const cmds = require('wdio-screen-commands')
 
 /* eslint-disable jsdoc/valid-types */
-/** @type WebdriverIO.Config */
+/** @type WebdriverIO.HookFunctions */
 const config = {
   before: async () => {
-    global.Should = require('chai').should()
     global.uuidv4 = require('uuid').v4
     const mailhog = require('mailhog')(browser.config.mailhog)
     browser.addCommand('getMail', mailhog.messages)
@@ -30,10 +29,10 @@ const config = {
   beforeTest: async test => {
     await cmds.startScreenRecording(test)
   },
-  afterTest: async test => {
+  afterTest: async (test, context, result) => {
     await Promise.all([
-      cmds.stopScreenRecording(test),
-      cmds.saveScreenshotByTest(test)
+      cmds.stopScreenRecording(test, result),
+      cmds.saveScreenshotByTest(test, result)
     ])
   }
 }

@@ -49,10 +49,8 @@ declare module WebdriverIO {
 
 declare module NodeJS {
   interface Global {
-    Should: Chai.Should
     uuidv4: typeof import('uuid/v4')
   }
 }
 
-declare const Should: Chai.Should
 declare const uuidv4: typeof import('uuid/v4')

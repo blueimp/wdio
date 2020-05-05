@@ -1,6 +1,6 @@
 'use strict'
 
-/* global browser, describe, it, uuidv4, BufferEncoding */
+/* global browser, describe, it, expect, uuidv4, BufferEncoding */
 
 const config = require('../')
 const Login = require('../pages/login')
@@ -35,17 +35,17 @@ describe('Attachments', () => {
       assetsDir + 'black+white-60x40.gif'
     ])
     const mail = browser.latestMailTo(recipient)
-    mail.attachments.length.should.equal(1)
+    expect(mail.attachments.length).toBe(1)
     const attachment = mail.attachments[0]
-    attachment.name.should.equal('black+white-60x40.gif')
-    attachment.type.should.equal('image/gif')
-    Buffer.from(
-      attachment.Body,
-      /** @type {BufferEncoding} */
-      (attachment.encoding)
-    )
-      .toString('base64')
-      .should.equal(b64DataGIF)
+    expect(attachment.name).toBe('black+white-60x40.gif')
+    expect(attachment.type).toBe('image/gif')
+    expect(
+      Buffer.from(
+        attachment.Body,
+        /** @type {BufferEncoding} */
+        (attachment.encoding)
+      ).toString('base64')
+    ).toBe(b64DataGIF)
   })
 
   it('sends multiple', () => {
@@ -55,26 +55,26 @@ describe('Attachments', () => {
       assetsDir + 'black+white-3x2.jpg'
     ])
     const mail = browser.latestMailTo(recipient)
-    mail.attachments.length.should.equal(2)
+    expect(mail.attachments.length).toBe(2)
     const attachment1 = mail.attachments[0]
-    attachment1.name.should.equal('black+white-60x40.gif')
-    attachment1.type.should.equal('image/gif')
-    Buffer.from(
-      attachment1.Body,
-      /** @type {BufferEncoding} */
-      (attachment1.encoding)
-    )
-      .toString('base64')
-      .should.equal(b64DataGIF)
+    expect(attachment1.name).toBe('black+white-60x40.gif')
+    expect(attachment1.type).toBe('image/gif')
+    expect(
+      Buffer.from(
+        attachment1.Body,
+        /** @type {BufferEncoding} */
+        (attachment1.encoding)
+      ).toString('base64')
+    ).toBe(b64DataGIF)
     const attachment2 = mail.attachments[1]
-    attachment2.name.should.equal('black+white-3x2.jpg')
-    attachment2.type.should.equal('image/jpeg')
-    Buffer.from(
-      attachment2.Body,
-      /** @type {BufferEncoding} */
-      (attachment2.encoding)
-    )
-      .toString('base64')
-      .should.equal(b64DataJPEG)
+    expect(attachment2.name).toBe('black+white-3x2.jpg')
+    expect(attachment2.type).toBe('image/jpeg')
+    expect(
+      Buffer.from(
+        attachment2.Body,
+        /** @type {BufferEncoding} */
+        (attachment2.encoding)
+      ).toString('base64')
+    ).toBe(b64DataJPEG)
   })
 })
