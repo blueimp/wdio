@@ -172,6 +172,8 @@ function Edit-CurrentUserRegistry {
   Set-RegistryProperty "$path\Privacy" ClearBrowsingHistoryOnExit DWord 1
   # Disable the Microsoft Edge first run page:
   Set-RegistryProperty "$path\Main" PreventFirstRunPage DWord 1
+  # Disable the Microsoft Edge default browser prompt:
+  Set-RegistryProperty "$path\Main" DisallowDefaultBrowserPrompt DWord 1
   # Set tbe Microsoft Edge home page to the new tab page:
   Set-RegistryProperty "$path\Main" HomeButtonPage String 'about:tabs'
   # Open new tabs in Microsoft Edge with a blank page:
