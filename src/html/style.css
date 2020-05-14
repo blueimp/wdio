@@ -47,6 +47,26 @@ textarea {
   display: block;
   overflow: auto;
 }
+button {
+  background: #3c76a7;
+  background: linear-gradient(180deg, #3c76a7, #225c8d);
+  border-color: #225c8d;
+  color: #fff;
+}
+button[type='submit'] {
+  background: #6fa349;
+  background: linear-gradient(180deg, #6fa349, #568a30);
+  border-color: #568a30;
+}
+button[type='reset'],
+button.warning {
+  background: #d79435;
+  background: linear-gradient(180deg, #d79435, #be7b1c);
+  border-color: #be7b1c;
+}
+button:active {
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
+}
 input[type='file'] {
   max-width: 100%;
   padding: 0;
@@ -70,6 +90,9 @@ input[type='file']::-webkit-file-upload-button {
   border-radius: 5px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.07);
 }
+input[type='file']::-webkit-file-upload-button:active {
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
+}
 input[type='file']::-ms-browse {
   box-sizing: border-box;
   margin: 0;
@@ -82,6 +105,9 @@ input[type='file']::-ms-browse {
   color: #fff;
   border-radius: 5px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.07);
+}
+input[type='file']::-ms-browse:active {
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -105,17 +131,4 @@ input[type='file']::-ms-browse {
     border-color: #363636;
     color: #dedede;
   }
-}
-
-#submit {
-  background: #6fa349;
-  background: linear-gradient(180deg, #6fa349, #568a30);
-  border-color: #568a30;
-  color: #fff;
-}
-#logout {
-  background: #d79435;
-  background: linear-gradient(180deg, #d79435, #be7b1c);
-  border-color: #be7b1c;
-  color: #fff;
 }
