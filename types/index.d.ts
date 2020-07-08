@@ -49,8 +49,8 @@ declare module WebdriverIO {
 
 declare module NodeJS {
   interface Global {
-    uuidv4: typeof import('uuid/v4')
+    uuidv4: typeof import('uuid').v4
   }
 }
 
-declare const uuidv4: typeof import('uuid/v4')
+declare const uuidv4: typeof import('uuid').v4
