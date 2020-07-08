@@ -33,10 +33,10 @@ $ffmpegOptions = @{
 }
 
 $versions = @{
-  nginx = '1.17.9'
+  nginx = '1.18.0'
   IEDriver = '3.150.1'
-  ffmpeg = '4.2.2'
-  MJPEGServer = '1.2.0'
+  ffmpeg = '4.3'
+  MJPEGServer = '1.3.0'
 }
 
 $downloads = @{
