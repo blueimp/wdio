@@ -45,6 +45,11 @@ declare module WebdriverIO {
     saveScreenshotByName: typeof import('wdio-screen-commands').saveScreenshotByName
     saveAndDiffScreenshot: typeof import('wdio-screen-commands').saveAndDiffScreenshot
   }
+
+  interface Element {
+    saveScreenshotByName: typeof import('wdio-screen-commands').saveScreenshotByName
+    saveAndDiffScreenshot: typeof import('wdio-screen-commands').saveAndDiffScreenshot
+  }
 }
 
 declare module NodeJS {
