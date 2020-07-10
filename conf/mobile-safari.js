@@ -16,7 +16,7 @@ const config = {
       maxInstances: 1,
       browserName: 'safari',
       platformName: 'iOS',
-      platformVersion: process.env.PLATFORM_VERSION || '13.4',
+      platformVersion: process.env.PLATFORM_VERSION || '13.5',
       deviceName: process.env.DEVICE_NAME || 'iPhone 11',
       orientation
     }
