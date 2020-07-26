@@ -1,27 +1,27 @@
-FROM alpine:3.11
+FROM alpine:3.12
 
 RUN echo '@edgetesting http://dl-cdn.alpinelinux.org/alpine/edge/testing' \
   >> /etc/apk/repositories
 
 RUN apk --no-cache add \
-    nodejs \
-    npm \
-    ffmpeg \
-    android-tools@edgetesting \
+  nodejs \
+  npm \
+  ffmpeg \
+  android-tools@edgetesting \
   && npm install -g \
-    npm@latest \
+  npm@latest \
   # Clean up obsolete files:
   && rm -rf \
-    /tmp/* \
-    /root/.npm
+  /tmp/* \
+  /root/.npm
 
 WORKDIR /usr/lib/wdio
 COPY package.json package-lock.json ./
 RUN npm install --production \
   # Clean up obsolete files:
   && rm -rf \
-    /tmp/* \
-    /root/.npm
+  /tmp/* \
+  /root/.npm
 # Set NODE_PATH to be able to require installed packages:
 ENV NODE_PATH=/usr/lib/wdio/node_modules
 # Extend path to be able to run installed binaries:
