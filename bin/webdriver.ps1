@@ -35,7 +35,8 @@ $ffmpegOptions = @{
 $versions = @{
   nginx = '1.18.0'
   IEDriver = '3.150.1'
-  ffmpeg = '4.3'
+  ffmpeg = 'autobuild-2020-11-14-12-28/' +
+    'ffmpeg-n4.3.1-25-g1936413eda-win64-gpl-shared-4.3'
   MJPEGServer = '1.3.0'
 }
 
@@ -49,8 +50,8 @@ $downloads = @{
   IEDriver = ('https://selenium-release.storage.googleapis.com/' +
     '{0}/IEDriverServer_Win32_{1}.zip') `
     -f ($versions.IEDriver.split('.')[0..1] -join '.'),$versions.IEDriver
-  ffmpeg = ('https://ffmpeg.zeranoe.com/builds/win64/static/' +
-    'ffmpeg-{0}-win64-static.zip') -f $versions.ffmpeg
+  ffmpeg = ('https://github.com/BtbN/FFmpeg-Builds/releases/download/' +
+    '{0}.zip') -f $versions.ffmpeg
   MJPEGServer = ('https://github.com/blueimp/mjpeg-server/releases/download/' +
     'v{0}/mjpeg-server-windows-amd64.zip') -f $versions.MJPEGServer
 }
