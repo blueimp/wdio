@@ -197,17 +197,22 @@ function Get-EdgeVersion {
 
 # Installs msedgedriver:
 function Install-EdgeDriver {
-  if (!(Test-Path bin\msedgedriver.exe)) {
-    $version = Get-EdgeVersion
-    if ($version) {
-      $url = $downloads.msedgedriver -f $version
-      New-Item bin -ItemType Directory -Force
-      Clear-Host
-      'Installing Microsoft Edge Driver ...'
-      Invoke-ZipDownload $url
-      Move-Item msedgedriver.exe bin
-      Remove-Item Driver_Notes -Recurse
+  $version = Get-EdgeVersion
+  if ($version) {
+    if (Test-Path bin\msedgedriver.exe) {
+      $driverVersion = ($(bin\msedgedriver.exe -v) -split ' ')[1]
+      if ($driverVersion -eq $version) {
+        return
+      }
+      Remove-Item bin\msedgedriver.exe
     }
+    $url = $downloads.msedgedriver -f $version
+    New-Item bin -ItemType Directory -Force
+    Clear-Host
+    'Installing Microsoft Edge Driver ...'
+    Invoke-ZipDownload $url
+    Move-Item msedgedriver.exe bin
+    Remove-Item Driver_Notes -Recurse
   }
 }
 
