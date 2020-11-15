@@ -1,8 +1,8 @@
 <#
-Installs and starts Webdriver servers for Edge (New+Legacy) & IE on Windows 10.
-Installs and starts NGINX as reverse proxy for remote Webdriver connections.
+Installs and starts Webdriver servers for Edge & IE on Windows 10.
+Installs and starts NGINX as reverse proxy for remote IEDriver connections.
 Installs and starts MJPEGServer and FFmpeg for screen recordings.
-Edits registry properties to configure Edge Legacy and IE.
+Edits registry properties to configure IE.
 Updates Windows hosts file with custom entries.
 
 Copyright 2019, Sebastian Tschan
@@ -69,7 +69,7 @@ $ffmpegCommand = ('ffmpeg' +
   ' -q {1}' +
   ' -') -f $ffmpegOptions.fps,$ffmpegOptions.quality
 
-# NGINX configuration as reverse proxy for Edge WebDriver and IEDriverServer:
+# NGINX configuration as reverse proxy for IEDriverServer:
 $nginxConfig = '
 worker_processes 1;
 events {
@@ -80,12 +80,6 @@ http {
     listen 4445;
     location / {
       proxy_pass http://localhost:5555;
-    }
-  }
-  server {
-    listen 4446;
-    location / {
-      proxy_pass http://localhost:17556;
     }
   }
 }
@@ -165,20 +159,6 @@ function Edit-CurrentUserRegistry {
   Set-RegistryProperty "$path\Main" 'Start Page' String 'about:blank'
   # Open new tabs in IE with a blank page:
   Set-RegistryProperty "$path\TabbedBrowsing" NewTabPageShow DWord 0
-  # Path to Microsoft Edge user settings:
-  $path = 'HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows' +
-    '\CurrentVersion\AppContainer\Storage' +
-    '\microsoft.microsoftedge_8wekyb3d8bbwe\MicrosoftEdge'
-  # Clear Microsoft Edge browsing history on exit:
-  Set-RegistryProperty "$path\Privacy" ClearBrowsingHistoryOnExit DWord 1
-  # Disable the Microsoft Edge first run page:
-  Set-RegistryProperty "$path\Main" PreventFirstRunPage DWord 1
-  # Disable the Microsoft Edge default browser prompt:
-  Set-RegistryProperty "$path\Main" DisallowDefaultBrowserPrompt DWord 1
-  # Set tbe Microsoft Edge home page to the new tab page:
-  Set-RegistryProperty "$path\Main" HomeButtonPage String 'about:tabs'
-  # Open new tabs in Microsoft Edge with a blank page:
-  Set-RegistryProperty "$path\ServiceUI" NewTabPageDisplayOption DWord 2
 }
 
 # Overwrites the Windows hosts file with the file windows.hosts, if available:
@@ -228,20 +208,6 @@ function Install-EdgeDriver {
       Move-Item msedgedriver.exe bin
       Remove-Item Driver_Notes -Recurse
     }
-  }
-}
-
-# Installs MicrosoftWebDriver (for Edge Legacy) via "Windows Feature on Demand":
-function Install-MicrosoftWebDriver {
-  # Windows versions before build 17763 do not have MicrosoftWebDriver as
-  # "Windows Feature on Demand" and only support older Edge versions.
-  # See https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
-  if ((Get-WindowsBuildNumber) -lt 17763) { return }
-  if (!(Get-Command MicrosoftWebDriver -ErrorAction SilentlyContinue)) {
-    $capabilityName = 'Microsoft.WebDriver~~~~0.0.1.0'
-    Invoke-AdminCommand DISM `
-      "/Online /Add-Capability /CapabilityName:$capabilityName" `
-      'for Edge Legacy WebDriver installation'
   }
 }
 
@@ -331,7 +297,6 @@ function Start-Service {
 
 Edit-CurrentUserRegistry
 Update-HostsFile
-Install-MicrosoftWebDriver
 Install-EdgeDriver
 Install-IEDriverServer
 Install-NGINX

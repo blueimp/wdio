@@ -1,4 +1,4 @@
-### Edge Legacy
+### Edge
 
 **Please Note:**  
 This guide assumes that a system with Windows 10 has been set up and the new

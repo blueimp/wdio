@@ -5,8 +5,7 @@ This guide assumes that a system with Windows 10 has been set up.
 
 Microsoft provides
 [free Windows 10 virtual machines](https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/)
-(that expire after 90 days) that can be used to test IE11 and Microsoft Edge
-Legacy.
+(that expire after 90 days) that can be used to test IE11.
 
 To run the tests with Internet Explorer, follow these steps:
 
