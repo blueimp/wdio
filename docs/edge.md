@@ -47,6 +47,10 @@ To run the tests with Edge, follow these steps:
    Allow `Microsoft WebDriver`, `nginx` and `MJPEGServer` to communicate on all
    networks in the Windows Defender Firewall dialog.
 
+   If the program window closes before starting the servers, execute the
+   PowerShell command from the previous step in a console window to be able to
+   read error messages.
+
 6. Run the tests with Edge:
    ```sh
    docker-compose run --rm wdio conf/edge.js

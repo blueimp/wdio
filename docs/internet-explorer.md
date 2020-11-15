@@ -59,6 +59,10 @@ To run the tests with Internet Explorer, follow these steps:
    Allow `Microsoft WebDriver`, `nginx` and `MJPEGServer` to communicate on all
    networks in the Windows Defender Firewall dialog.
 
+   If the program window closes before starting the servers, execute the
+   PowerShell command from the previous step in a console window to be able to
+   read error messages.
+
 8. Run the tests with Internet Explorer:
    ```sh
    docker-compose run --rm wdio conf/internet-explorer.js
