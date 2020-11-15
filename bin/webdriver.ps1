@@ -139,7 +139,7 @@ function Edit-CurrentUserRegistry {
   # 3    | Internet Zone
   # 4    | Restricted Sites Zone
   #
-  $path = '\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Zones'
+  $path = '\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones'
   # 2500 is the property key for the Protected Mode setting:
   $name = '2500'
   foreach ($zone in @(1, 2, 3, 4)) {
@@ -147,7 +147,7 @@ function Edit-CurrentUserRegistry {
   }
   # Enable the driver to maintain a connection to the instance of Internet
   # Explorer it creates:
-  $path = 'HKCU:\SOFTWARE\Wow6432Node\Microsoft\Internet Explorer\Main' +
+  $path = 'HKCU:\Software\Wow6432Node\Microsoft\Internet Explorer\Main' +
     '\FeatureControl\FEATURE_BFCACHE'
   Set-RegistryProperty $path iexplore.exe DWord 0
   # Path to IE user settings:
@@ -204,16 +204,15 @@ function Invoke-ZipDownload {
 
 # Returns the Windows build number:
 function Get-WindowsBuildNumber {
-  (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion' `
+  (Get-ItemProperty 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion' `
     'CurrentBuild').CurrentBuild
 }
 
 # Returns the Edge version number:
 function Get-EdgeVersion {
-  $path = 'HKLM:\SOFTWARE\Wow6432node\Microsoft\Windows\CurrentVersion' +
-    '\Uninstall\Microsoft Edge'
+  $path = 'HKCU:\Software\Microsoft\Edge\BLBeacon'
   Get-ItemProperty $path -ErrorAction SilentlyContinue |
-    ForEach-Object DisplayVersion
+    ForEach-Object version
 }
 
 # Installs msedgedriver:
