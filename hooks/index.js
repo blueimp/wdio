@@ -3,11 +3,12 @@
 /* global browser */
 
 const cmds = require('wdio-screen-commands')
+const { v4: uuidv4 } = require('uuid');
 
 module.exports = {
   before: () => {
     global.should = require('chai').should()
-    global.uuidv4 = require('uuid/v4')
+    global.uuidv4 = uuidv4
     const mailhog = require('mailhog')(browser.config.mailhog)
     browser.addCommand('mailhog', (cmd, ...args) => mailhog[cmd](...args))
     browser.addCommand('saveScreenshotByName', cmds.saveScreenshotByName)
