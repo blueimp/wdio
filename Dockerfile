@@ -1,13 +1,10 @@
-FROM alpine:3.12
-
-RUN echo '@edgetesting http://dl-cdn.alpinelinux.org/alpine/edge/testing' \
-  >> /etc/apk/repositories
+FROM alpine:3.14
 
 RUN apk --no-cache add \
   nodejs \
   npm \
   ffmpeg \
-  android-tools@edgetesting \
+  android-tools \
   && npm install -g \
   npm@latest \
   # Clean up obsolete files:
