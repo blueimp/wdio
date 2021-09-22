@@ -30,5 +30,3 @@ declare namespace WebdriverIO {
     saveAndDiffScreenshot: typeof import('wdio-screen-commands').saveAndDiffScreenshot
   }
 }
-
-declare var uuidv4: typeof import('uuid').v4

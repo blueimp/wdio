@@ -1,7 +1,8 @@
 'use strict'
 
-/* global browser, describe, it, expect, uuidv4, BufferEncoding */
+/* global browser, describe, it, expect, BufferEncoding */
 
+const uuidv4 = require('uuid').v4
 const config = require('../')
 const Login = require('../pages/login')
 const Mail = require('../pages/mail')

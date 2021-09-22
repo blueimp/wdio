@@ -1,8 +1,9 @@
 'use strict'
 
-/* global browser, describe, it, expect, uuidv4 */
+/* global browser, describe, it, expect */
 /* eslint-disable new-cap */
 
+const uuidv4 = require('uuid').v4
 const config = require('../')
 const Login = require('../pages/login')
 const Mail = require('../pages/mail')
