@@ -35,12 +35,10 @@ class Mail {
    * Opens the mail form.
    *
    * @param {number} [timeout] Wait timeout
-   * @returns {Mail} Mail object
    */
-  open(timeout) {
-    browser.url('/')
-    this.recipient.waitForExist({ timeout })
-    return this
+  async open(timeout) {
+    await browser.url('/')
+    await this.recipient.waitForExist({ timeout })
   }
   /**
    * Sends mail.
@@ -50,39 +48,33 @@ class Mail {
    * @param {string} [content] Mail text content
    * @param {Array<string>} [attachments] Mail attachments
    * @param {number} [timeout] Wait timeout
-   * @returns {Mail} Mail object
    */
-  send(recipient, subject, content, attachments, timeout) {
-    this.recipient.setValue(recipient)
-    if (subject) this.subject.setValue(subject)
-    if (content) this.content.setValue(content)
-    if (attachments) this.attachments.addValue(attachments.join('\n'))
-    this.submit.scrollIntoView()
-    this.submit.click()
-    this.result.waitForExist({ timeout })
-    return this
+  async send(recipient, subject, content, attachments, timeout) {
+    await this.recipient.setValue(recipient)
+    if (subject) await this.subject.setValue(subject)
+    if (content) await this.content.setValue(content)
+    if (attachments) await this.attachments.addValue(attachments.join('\n'))
+    await this.submit.scrollIntoView()
+    await this.submit.click()
+    await this.result.waitForExist({ timeout })
   }
   /**
    * Returns to the mail form.
    *
    * @param {number} [timeout] Wait timeout
-   * @returns {Mail} Mail object
    */
-  return(timeout) {
-    this.back.click()
-    this.recipient.waitForExist({ timeout })
-    return this
+  async return(timeout) {
+    await this.back.click()
+    await this.recipient.waitForExist({ timeout })
   }
   /**
    * Performs signout.
    *
    * @param {number} [timeout] Wait timeout
-   * @returns {Mail} Mail object
    */
-  logout(timeout) {
-    this.logoutButton.click()
-    this.password.waitForExist({ timeout })
-    return this
+  async logout(timeout) {
+    await this.logoutButton.click()
+    await this.password.waitForExist({ timeout })
   }
 }
 

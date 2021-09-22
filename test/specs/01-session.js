@@ -8,34 +8,39 @@ const Login = require('../pages/login')
 const Mail = require('../pages/mail')
 
 describe('Session', () => {
-  it('requires login', () => {
-    expect(() => Mail.open(500)).toThrow()
-    expect(browser).toHaveTitle('Login')
+  it('requires login', async () => {
+    await expect(Mail.open(500)).rejects.toThrow()
+    await expect(browser).toHaveTitle('Login')
   })
 
-  it('requires email', () => {
-    Login.open()
-    expect(() => Login.authenticate('', config.user.password, 500)).toThrow()
-    expect(browser).toHaveTitle('Login')
+  it('requires email', async () => {
+    await Login.open()
+    await expect(
+      Login.authenticate('', config.user.password, 500)
+    ).rejects.toThrow()
+    await expect(browser).toHaveTitle('Login')
   })
 
-  it('requires password', () => {
-    Login.open()
-    expect(() => Login.authenticate(config.user.email, '', 500)).toThrow()
-    expect(browser).toHaveTitle('Login')
+  it('requires password', async () => {
+    await Login.open()
+    await expect(
+      Login.authenticate(config.user.email, '', 500)
+    ).rejects.toThrow()
+    await expect(browser).toHaveTitle('Login')
   })
 
-  it('logs in', () => {
-    Login.open()
-    expect(browser).toHaveTitle('Login')
-    browser.saveAndDiffScreenshot('Login')
-    Login.authenticate(config.user.email, config.user.password)
-    expect(browser).toHaveTitle('Send mail')
+  it('logs in', async () => {
+    await Login.open()
+    await expect(browser).toHaveTitle('Login')
+    await browser.saveAndDiffScreenshot('Login')
+    await Login.authenticate(config.user.email, config.user.password)
+    await expect(browser).toHaveTitle('Send mail')
   })
 
-  it('logs out', () => {
-    Mail.open().logout()
-    expect(() => Mail.open(500)).toThrow()
-    expect(browser).toHaveTitle('Login')
+  it('logs out', async () => {
+    await Mail.open()
+    await Mail.logout()
+    await expect(Mail.open(500)).rejects.toThrow()
+    await expect(browser).toHaveTitle('Login')
   })
 })

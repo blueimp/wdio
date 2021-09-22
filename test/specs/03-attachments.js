@@ -25,21 +25,23 @@ const b64DataJPEG =
 describe('Attachments', () => {
   if (!assetsDir) return
 
-  it('logs in', () => {
-    Login.open().authenticate(config.user.email, config.user.password)
+  it('logs in', async () => {
+    await Login.open()
+    await Login.authenticate(config.user.email, config.user.password)
   })
 
-  it('sends one', () => {
+  it('sends one', async () => {
     const recipient = uuidv4() + '@example.org'
-    Mail.open().send(recipient, 'One attachment', null, [
+    await Mail.open()
+    await Mail.send(recipient, 'One attachment', null, [
       assetsDir + 'black+white-60x40.gif'
     ])
-    const mail = browser.latestMailTo(recipient)
-    expect(mail.attachments.length).toBe(1)
+    const mail = await browser.latestMailTo(recipient)
+    await expect(mail.attachments.length).toBe(1)
     const attachment = mail.attachments[0]
-    expect(attachment.name).toBe('black+white-60x40.gif')
-    expect(attachment.type).toBe('image/gif')
-    expect(
+    await expect(attachment.name).toBe('black+white-60x40.gif')
+    await expect(attachment.type).toBe('image/gif')
+    await expect(
       Buffer.from(
         attachment.Body,
         /** @type {BufferEncoding} */
@@ -48,18 +50,19 @@ describe('Attachments', () => {
     ).toBe(b64DataGIF)
   })
 
-  it('sends multiple', () => {
+  it('sends multiple', async () => {
     const recipient = uuidv4() + '@example.org'
-    Mail.open().send(recipient, 'Multiple attachments', null, [
+    await Mail.open()
+    await Mail.send(recipient, 'Multiple attachments', null, [
       assetsDir + 'black+white-60x40.gif',
       assetsDir + 'black+white-3x2.jpg'
     ])
-    const mail = browser.latestMailTo(recipient)
-    expect(mail.attachments.length).toBe(2)
+    const mail = await browser.latestMailTo(recipient)
+    await expect(mail.attachments.length).toBe(2)
     const attachment1 = mail.attachments[0]
-    expect(attachment1.name).toBe('black+white-60x40.gif')
-    expect(attachment1.type).toBe('image/gif')
-    expect(
+    await expect(attachment1.name).toBe('black+white-60x40.gif')
+    await expect(attachment1.type).toBe('image/gif')
+    await expect(
       Buffer.from(
         attachment1.Body,
         /** @type {BufferEncoding} */
@@ -67,9 +70,9 @@ describe('Attachments', () => {
       ).toString('base64')
     ).toBe(b64DataGIF)
     const attachment2 = mail.attachments[1]
-    expect(attachment2.name).toBe('black+white-3x2.jpg')
-    expect(attachment2.type).toBe('image/jpeg')
-    expect(
+    await expect(attachment2.name).toBe('black+white-3x2.jpg')
+    await expect(attachment2.type).toBe('image/jpeg')
+    await expect(
       Buffer.from(
         attachment2.Body,
         /** @type {BufferEncoding} */

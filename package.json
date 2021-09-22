@@ -7,7 +7,6 @@
     "@wdio/local-runner": "7",
     "@wdio/mocha-framework": "7",
     "@wdio/spec-reporter": "7",
-    "@wdio/sync": "7",
     "mailhog": "4",
     "uuid": "8",
     "wdio-screen-commands": "5"

@@ -8,27 +8,28 @@ const Login = require('../pages/login')
 const Mail = require('../pages/mail')
 
 describe('Mail', () => {
-  it('logs in', () => {
-    Login.open().authenticate(config.user.email, config.user.password)
+  it('logs in', async () => {
+    await Login.open()
+    await Login.authenticate(config.user.email, config.user.password)
   })
 
-  it('requires recipient', () => {
-    Mail.open()
-    expect(() => Mail.send('', null, null, null, 500)).toThrow()
-    expect(browser).toHaveTitle('Send mail')
+  it('requires recipient', async () => {
+    await Mail.open()
+    await expect(Mail.send('', null, null, null, 500)).rejects.toThrow()
+    await expect(browser).toHaveTitle('Send mail')
   })
 
-  it('sends unicode', () => {
+  it('sends unicode', async () => {
     const recipient = uuidv4() + '@example.org'
     const content = '日本'
-    Mail.open()
-    expect(browser).toHaveTitle('Send mail')
-    browser.saveAndDiffScreenshot('Send mail')
-    Mail.send(recipient, 'Unicode mail', content)
-    expect(Mail.result.getText()).toBe('Mail sent!')
-    expect(browser).toHaveTitle('Mail sent!')
-    browser.saveAndDiffScreenshot('Mail sent')
-    Mail.return()
-    expect(browser.latestMailTo(recipient).text).toBe(content)
+    await Mail.open()
+    await expect(browser).toHaveTitle('Send mail')
+    await browser.saveAndDiffScreenshot('Send mail')
+    await Mail.send(recipient, 'Unicode mail', content)
+    await expect(await Mail.result.getText()).toBe('Mail sent!')
+    await expect(browser).toHaveTitle('Mail sent!')
+    await browser.saveAndDiffScreenshot('Mail sent')
+    await Mail.return()
+    await expect((await browser.latestMailTo(recipient)).text).toBe(content)
   })
 })

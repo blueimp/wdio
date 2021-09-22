@@ -20,12 +20,10 @@ class Login {
    * Opens the login form.
    *
    * @param {number} [timeout] Wait timeout
-   * @returns {Login} Login object
    */
-  open(timeout) {
-    browser.url('/login.html')
-    this.password.waitForExist({ timeout })
-    return this
+  async open(timeout) {
+    await browser.url('/login.html')
+    await this.password.waitForExist({ timeout })
   }
   /**
    * Authenticates user.
@@ -33,14 +31,12 @@ class Login {
    * @param {string} email User email
    * @param {string} password User password
    * @param {number} [timeout] Wait timeout
-   * @returns {Login} Login object
    */
-  authenticate(email, password, timeout) {
-    this.email.setValue(email)
-    this.password.setValue(password)
-    this.submit.click()
-    this.recipient.waitForExist({ timeout })
-    return this
+  async authenticate(email, password, timeout) {
+    await this.email.setValue(email)
+    await this.password.setValue(password)
+    await this.submit.click()
+    await this.recipient.waitForExist({ timeout })
   }
 }
 
