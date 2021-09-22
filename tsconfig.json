@@ -1,17 +1,18 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,
     "types": [
-      "node",
-      "@wdio/sync",
       "@wdio/mocha-framework",
       "expect-webdriverio",
+      "node",
+      "webdriverio/sync",
       "wdio-screen-commands/types",
       "./types"
     ],
-    "target": "ES2018",
+    "target": "ES2021",
     "moduleResolution": "Node"
   }
 }

@@ -5,7 +5,7 @@
 const cmds = require('wdio-screen-commands')
 
 /* eslint-disable jsdoc/valid-types */
-/** @type WebdriverIO.HookFunctions */
+/** @type WebdriverIO.HookFunctionExtension */
 const config = {
   before: async () => {
     global.uuidv4 = require('uuid').v4

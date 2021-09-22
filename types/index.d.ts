@@ -7,7 +7,7 @@ type UnwrapReturnType<T> = T extends (...args: any[]) => Promise<infer U>
 
 type mailhog = import('mailhog').API
 
-declare module WebdriverIO {
+declare namespace WebdriverIO {
   interface Config {
     maximizeWindow?: boolean
     assetsDir?: string
@@ -16,6 +16,8 @@ declare module WebdriverIO {
   }
 
   interface Browser {
+    config: Config
+
     getMail: (
       ...args: Parameters<mailhog['messages']>
     ) => UnwrapReturnType<mailhog['messages']>
@@ -52,10 +54,4 @@ declare module WebdriverIO {
   }
 }
 
-declare module NodeJS {
-  interface Global {
-    uuidv4: typeof import('uuid').v4
-  }
-}
-
-declare const uuidv4: typeof import('uuid').v4
+declare var uuidv4: typeof import('uuid').v4
