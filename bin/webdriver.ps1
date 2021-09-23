@@ -279,7 +279,7 @@ function Update-Path {
   }
 }
 
-# Starts nginx, IEDriverServer and MicrosoftWebDriver (if installed).
+# Starts nginx, IEDriverServer and msedgedriver (if installed).
 # Waits for IEDriverServer to close, then sends nginx the stop signal:
 function Start-Service {
   Clear-Host
@@ -290,9 +290,6 @@ function Start-Service {
   'Starting servers ...'
   if (Get-Command msedgedriver -ErrorAction SilentlyContinue) {
     Start-Process msedgedriver '--port=4444 --whitelisted-ips='
-  }
-  if (Get-Command MicrosoftWebDriver -ErrorAction SilentlyContinue) {
-    Start-Process MicrosoftWebDriver
   }
   Start-Process IEDriverServer
   Start-Process nginx -WorkingDirectory nginx
