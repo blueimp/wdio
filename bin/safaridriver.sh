@@ -20,11 +20,16 @@ else
   INDEX=$1
 fi
 
-echo 'Starting safaridriver on 127.0.0.1:4444 ...' >&2
-"$BIN" -p 4444 & pid=$!
+NGINX_CONF="$(cd "$(dirname "$0")/../etc"; pwd)/nginx.conf"
+
+echo 'Starting nginx on 127.0.0.1:4444 ...' >&2
+nginx -c "$NGINX_CONF" & pid_nginx=$!
+
+echo 'Starting safaridriver on 127.0.0.1:5555 ...' >&2
+"$BIN" -p 5555 & pid_safaridriver=$!
 
 # shellcheck disable=SC2064
-trap "kill $pid; exit" INT TERM
+trap "kill $pid_nginx; kill $pid_safaridriver; exit" INT TERM
 
 echo 'Starting mjpeg-server on 127.0.0.1:9000 ...' >&2
 mjpeg-server -a 127.0.0.1:9000 -- ffmpeg \

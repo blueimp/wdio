@@ -18,10 +18,10 @@ To run the tests with Safari on MacOS, follow these steps:
 
 2. Download and install [MJPEG Server](https://github.com/blueimp/mjpeg-server)
    as `mjpeg-server` in your `PATH` and install [FFmpeg](https://ffmpeg.org/)
-   via [Homebrew](https://brew.sh/):
+   and [NGINX](https://nginx.org/) via [Homebrew](https://brew.sh/):
 
    ```sh
-   brew install ffmpeg
+   brew install ffmpeg nginx
    ```
 
 3. Add the `example` host to your `/etc/hosts` file:
@@ -30,7 +30,8 @@ To run the tests with Safari on MacOS, follow these steps:
    printf '127.0.0.1\t%s\n' example | sudo tee -a /etc/hosts
    ```
 
-4. Start `safaridriver` and `mjpeg-server` with the provided helper script:
+4. Start `safaridriver`, `nginx` and `mjpeg-server` with the provided helper
+   script:
 
    ```sh
    bin/safaridriver.sh [-t] [screen index]
