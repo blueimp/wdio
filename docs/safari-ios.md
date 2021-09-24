@@ -61,7 +61,7 @@ To run the tests with Safari on iOS, follow these steps:
    `DEVICE_NAME` environment variable:
 
    ```sh
-   DEVICE_NAME='iPad Pro (11-inch)' \
+   DEVICE_NAME='iPad Pro (11-inch) (3rd generation)' \
     docker-compose run --rm wdio conf/safari-ios.js
    ```
 
@@ -69,5 +69,5 @@ To run the tests with Safari on iOS, follow these steps:
    `PLATFORM_VERSION` environment variable:
 
    ```sh
-   PLATFORM_VERSION=12.1 docker-compose run --rm wdio conf/safari-ios.js
+   PLATFORM_VERSION=15.0 docker-compose run --rm wdio conf/safari-ios.js
    ```
