@@ -16,9 +16,14 @@ const config = {
       maxInstances: 1,
       browserName: 'safari',
       platformName: 'iOS',
-      platformVersion: process.env.PLATFORM_VERSION || '13.5',
-      deviceName: process.env.DEVICE_NAME || 'iPhone 11',
-      orientation
+      //'safari:useSimulator': true,
+      //'appium:automationName': 'safari',
+      // Safaridriver seems to not trigger click events in Safari on iOS 15,
+      // So we continue using XCUITest as automation driver for Webdriver tests.
+      'appium:automationName': 'XCUITest',
+      'appium:platformVersion': process.env.PLATFORM_VERSION || '15.0',
+      'appium:deviceName': process.env.DEVICE_NAME || 'iPhone 13',
+      'appium:orientation': orientation
     }
   ],
   appium: {
