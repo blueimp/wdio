@@ -30,26 +30,34 @@ To run the tests with Safari on MacOS, follow these steps:
    printf '127.0.0.1\t%s\n' example | sudo tee -a /etc/hosts
    ```
 
-4. Start `safaridriver`, `nginx` and `mjpeg-server` with the provided helper
-   script:
+4. Start `safaridriver` with `nginx` as reverse proxy:
 
    ```sh
-   bin/safaridriver.sh [-t] [screen index]
+   bin/safaridriver.sh [-t]
    ```
 
    Providing the `-t` argument starts the `safaridriver` for
-   [Safari Technology Preview](https://developer.apple.com/safari/technology-preview/).
+   [Safari Technology Preview](https://developer.apple.com/safari/technology-preview/)
+   and requires setting `browserName` in [../conf/safari.js](../conf/safari.js)
+   to `safari technology preview`.
+
+5. Start `mjpeg-server` to provide a MJPEG stream of the macOS desktop to
+   capture video records of the test runs:
+
+   ```sh
+   bin/mjpeg-server.sh [screen index]
+   ```
 
    Providing a number as screen index (e.g. `2`) allows to use a different
-   capture screen. Running the command without this argument will display a list
-   of available screens if there are more than one available.
+   capture screen. Running the command without this argument will display a
+   selection of available screens if there are more than one available.
 
    **Please Note:**  
    The Terminal application the `mjpeg-server` command is started from requires
    Screen Recording permissions:  
    System Preferences => Security & Privacy => Privacy => Screen Recording
 
-5. Run the tests with Safari:
+6. Run the tests with Safari:
    ```sh
    docker-compose run --rm wdio conf/safari.js
    ```
