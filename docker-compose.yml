@@ -19,7 +19,6 @@ services:
       - mailhog
   chromedriver:
     image: blueimp/chromedriver
-    init: true
     tmpfs: /tmp
     environment:
       - DISABLE_X11=false
@@ -31,7 +30,6 @@ services:
       - 127.0.0.1:5900:5900
   geckodriver:
     image: blueimp/geckodriver
-    init: true
     tmpfs: /tmp
     shm_size: 2g
     environment:
@@ -44,7 +42,6 @@ services:
       - 127.0.0.1:5901:5900
   wdio:
     image: blueimp/wdio
-    init: true
     read_only: true
     tmpfs:
       - /tmp

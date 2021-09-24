@@ -1,6 +1,7 @@
 FROM alpine:3.14
 
 RUN apk --no-cache add \
+  tini \
   nodejs \
   npm \
   ffmpeg \
@@ -34,4 +35,4 @@ WORKDIR /opt
 
 COPY bin/wait-for-hosts.sh /usr/local/bin/wait-for-hosts
 
-ENTRYPOINT ["wait-for-hosts", "--", "wdio"]
+ENTRYPOINT ["tini", "-g", "--", "wait-for-hosts", "--", "wdio"]
