@@ -9,8 +9,8 @@ else
   SUFFIX=
 fi
 
-echo "Starting safaridriver$SUFFIX on 127.0.0.1:6666 ..." >&2
-"$BIN" -p 6666 &
+echo "Starting safaridriver$SUFFIX on 127.0.0.1:3333 ..." >&2
+"$BIN" -p 3333 &
 
 NGINX_CONF="$(cd "$(dirname "$0")/../etc"; pwd)/nginx.conf"
 

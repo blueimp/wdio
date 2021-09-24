@@ -1,7 +1,7 @@
 #!/bin/sh
 
-echo 'Starting geckodriver on 127.0.0.1:6666 ...' >&2
-geckodriver -p 6666 & pid_geckodriver=$!
+echo 'Starting geckodriver on 127.0.0.1:3333 ...' >&2
+geckodriver -p 3333 & pid_geckodriver=$!
 
 NGINX_CONF="$(cd "$(dirname "$0")/../etc"; pwd)/nginx.conf"
 
