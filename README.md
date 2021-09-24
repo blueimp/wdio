@@ -3,7 +3,7 @@
 Docker setup for [WebdriverIO](https://webdriver.io/) with automatic
 screenshots, image diffing and screen recording support for containerized
 versions of Chrome and Firefox on Linux, mobile versions of Chrome and Firefox
-on Android as well as Safari on iOS, Safari on MacOS and Edge on Windows.
+on Android as well as Safari on iOS, Safari on macOS and Edge on Windows.
 
 ## Contents
 
@@ -15,7 +15,6 @@ on Android as well as Safari on iOS, Safari on MacOS and Edge on Windows.
   - [Chrome on Android](docs/chrome-android.md)
   - [Firefox on Android](docs/firefox-android.md)
   - [Edge](docs/edge.md)
-- [FAQ](docs/FAQ.md)
 - [License](#license)
 - [Author](#author)
 

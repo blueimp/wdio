@@ -1,6 +1,6 @@
 ### Safari
 
-To run the tests with Safari on MacOS, follow these steps:
+To run the tests with Safari on macOS, follow these steps:
 
 1. Configure Safari to Enable WebDriver Support (see
    [Testing with WebDriver in Safari](https://developer.apple.com/documentation/webkit/testing_with_webdriver_in_safari)):
