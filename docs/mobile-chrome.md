@@ -2,8 +2,14 @@
 
 To run the tests with Mobile Chrome on Android Simulator, follow these steps:
 
-1. Download [Android Studio](https://developer.android.com/studio/) and on first
-   start, follow the instructions to install the Android SDK and Emulator.
+1. Download [Android Studio](https://developer.android.com/studio/) (release
+   version "Arctic Fox" at the time of this writing) and on the welcome dialog,
+   select "More Actions" => "SDK Manager", then switch to the "SDK Tools" tab
+   and install the following components (if not already installed):
+
+   - Android Emulator
+   - Android SDK Platform-Tools
+   - Intel x86 Emulator Accelerator (HAXM installer)
 
    **Please Note:**  
    To be able to use a custom `/etc/hosts` file requires mounting the root file
@@ -23,7 +29,7 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
    [Appium](https://appium.io/):
 
    ```sh
-   export JAVA_HOME='/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home'
+   export JAVA_HOME='/Applications/Android Studio.app/Contents/jre/Contents/Home'
    export PATH="$JAVA_HOME/bin:$PATH"
    export ANDROID_HOME=~/Library/Android/sdk
    ```
