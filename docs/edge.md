@@ -1,7 +1,7 @@
 ### Edge
 
 **Please Note:**  
-This guide assumes that a system with Windows 10 has been set up and the new
+This guide assumes that a system with Windows 10+ has been set up and the
 [Microsoft Edge](https://www.microsoft.com/en-us/edge) browser has been
 installed.
 
@@ -27,11 +27,12 @@ To run the tests with Edge, follow these steps:
 2. Edit the `example` host entry in [etc/windows.hosts](etc/windows.hosts) and
    set its IP address to the `SERVER_HOST` IP defined in the `.env` file.
 
-3. Copy [bin/webdriver.ps1](bin/webdriver.ps1) and
-   [etc/windows.hosts](etc/windows.hosts) to the same folder in the Windows
+3. Copy [../bin/webdriver.ps1](../bin/webdriver.ps1),
+   [../etc/windows.hosts](../etc/windows.hosts) and
+   [../etc/nginx.conf](../etc/nginx.conf) to the same folder in the Windows
    machine (e.g. the Desktop).  
-   Also copy the files in the `assets` directory to the folder defined as
-   `WINDOWS_ASSETS_DIR`.
+   Also copy the files in the [../assets](../assets) directory to the folder
+   defined as `WINDOWS_ASSETS_DIR`.
 
 4. Create a shortcut to `webdriver.ps1` (via "Right-Click" → "Create shortcut"),
    then open the properties dialog for the shortcut (via "Right-Click" →
@@ -44,8 +45,8 @@ To run the tests with Edge, follow these steps:
    Click "OK" to save the changes to the shortcut.
 
 5. Double-Click on the webdriver shortcut to setup and start the servers.  
-   Allow `Microsoft WebDriver`, `nginx` and `MJPEGServer` to communicate on all
-   networks in the Windows Defender Firewall dialog.
+   Allow `nginx` and `MJPEGServer` to communicate on all networks in the Windows
+   Defender Firewall dialog.
 
    If the program window closes before starting the servers, execute the
    PowerShell command from the previous step in a console window to be able to

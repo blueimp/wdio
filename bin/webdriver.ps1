@@ -1,9 +1,8 @@
 <#
-Installs and starts Webdriver servers for Edge & IE on Windows 10.
-Installs and starts NGINX as reverse proxy for remote IEDriver connections.
+Installs and starts a Webdriver server for Edge.
+Installs and starts NGINX as reverse proxy for remote Webdriver connections.
 Installs and starts MJPEGServer and FFmpeg for screen recordings.
-Edits registry properties to configure IE.
-Updates Windows hosts file with custom entries.
+Updates the Windows hosts file with custom entries.
 
 Copyright 2019, Sebastian Tschan
 https://blueimp.net
@@ -13,8 +12,9 @@ https://opensource.org/licenses/MIT
 
 Resources:
 https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
-https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver
 https://nginx.org/en/docs/windows.html
+https://github.com/blueimp/mjpeg-server
+https://www.ffmpeg.org/
 #>
 
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
@@ -33,23 +33,15 @@ $ffmpegOptions = @{
 }
 
 $versions = @{
-  nginx = '1.18.0'
-  IEDriver = '3.150.1'
-  ffmpeg = 'autobuild-2020-11-14-12-28/' +
-    'ffmpeg-n4.3.1-25-g1936413eda-win64-gpl-shared-4.3'
+  nginx = '1.21.3'
+  ffmpeg = 'autobuild-2021-09-24-12-21/' +
+    'ffmpeg-n4.4-154-g79c114e1b2-win64-gpl-shared-4.4'
   MJPEGServer = '1.3.0'
 }
 
 $downloads = @{
-  nginx = 'https://nginx.org/download/nginx-{0}.zip' -f $versions.nginx
+  nginx = 'https://nginx.org/download/nginx-1.21.3.zip' -f $versions.nginx
   msedgedriver = 'https://msedgedriver.azureedge.net/{0}/edgedriver_win64.zip'
-  # Using the 32bit IEDriverServer (64bit version has performance issues).
-  # The download URL contains the version number twice.
-  # Once as directory with the major.minor version and once in the file name
-  # with the full version string:
-  IEDriver = ('https://selenium-release.storage.googleapis.com/' +
-    '{0}/IEDriverServer_Win32_{1}.zip') `
-    -f ($versions.IEDriver.split('.')[0..1] -join '.'),$versions.IEDriver
   ffmpeg = ('https://github.com/BtbN/FFmpeg-Builds/releases/download/' +
     '{0}.zip') -f $versions.ffmpeg
   MJPEGServer = ('https://github.com/blueimp/mjpeg-server/releases/download/' +
@@ -69,22 +61,6 @@ $ffmpegCommand = ('ffmpeg' +
   ' -q {1}' +
   ' -') -f $ffmpegOptions.fps,$ffmpegOptions.quality
 
-# NGINX configuration as reverse proxy for IEDriverServer:
-$nginxConfig = '
-worker_processes 1;
-events {
-  worker_connections 1024;
-}
-http {
-  server {
-    listen 4445;
-    location / {
-      proxy_pass http://localhost:5555;
-    }
-  }
-}
-'
-
 # Relative install paths to add to the PATH environment variable:
 $installPaths = @('bin', 'nginx', 'ffmpeg\bin')
 
@@ -101,64 +77,6 @@ function Invoke-PowershellAdminCommand {
   param([String]$command, [String]$reason)
   $params = "-ExecutionPolicy ByPass -command $($command -replace '"','\"')"
   Invoke-AdminCommand powershell $params $reason
-}
-
-# Sets a registry property.
-# Also creates the parent path if it does not exist:
-function Set-RegistryProperty {
-  param([String]$path, [String]$name, [String]$type, $value)
-  $prop = Get-ItemProperty $path $name -ErrorAction SilentlyContinue
-  if (!$prop) {
-    if (!(Test-Path $path)) {
-      # -Force option is required if the parent path does not exist:
-      New-Item $path -Force
-    }
-    New-ItemProperty $path $name -PropertyType $type -Value $value
-  } elseif ($prop.$name -ne $value) {
-    Set-ItemProperty $path -Name $name $value
-  }
-}
-
-# Edits HKEY_CURRENT_USER (HKCU) registry:
-function Edit-CurrentUserRegistry {
-  # Set the same Protected Mode for all Internet Zones by copying the property
-  # from zone 4 (Restricted Sites) of the default settings (HKLM) to zones 1-4
-  # of the user settings (HKCU):
-  #
-  # Zone | Setting
-  # ---- | ---------------------
-  # 0    | My Computer
-  # 1    | Local Intranet Zone
-  # 2    | Trusted sites Zone
-  # 3    | Internet Zone
-  # 4    | Restricted Sites Zone
-  #
-  $path = '\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones'
-  # 2500 is the property key for the Protected Mode setting:
-  $name = '2500'
-  foreach ($zone in @(1, 2, 3, 4)) {
-    Copy-ItemProperty "HKLM:$path\4" -Name $name "HKCU:$path\$zone"
-  }
-  # Enable the driver to maintain a connection to the instance of Internet
-  # Explorer it creates:
-  $path = 'HKCU:\Software\Wow6432Node\Microsoft\Internet Explorer\Main' +
-    '\FeatureControl\FEATURE_BFCACHE'
-  Set-RegistryProperty $path iexplore.exe DWord 0
-  # Path to IE user settings:
-  $path = 'HKCU:\Software\Microsoft\Internet Explorer'
-  # Disable IE Compatibility View for Intranet Sites:
-  Set-RegistryProperty "$path\BrowserEmulation" IntranetCompatibilityMode `
-    DWord 0
-  # Disable "Preserve Favorites website data":
-  Set-RegistryProperty "$path\Privacy" UseAllowList DWord 0
-  # Clear IE browsing history on exit:
-  Set-RegistryProperty "$path\Privacy" ClearBrowsingHistoryOnExit DWord 1
-  # Disable the IE first run page:
-  Set-RegistryProperty "$path\Main" DisableFirstRunCustomize DWord 1
-  # Start IE with a blank page:
-  Set-RegistryProperty "$path\Main" 'Start Page' String 'about:blank'
-  # Open new tabs in IE with a blank page:
-  Set-RegistryProperty "$path\TabbedBrowsing" NewTabPageShow DWord 0
 }
 
 # Overwrites the Windows hosts file with the file windows.hosts, if available:
@@ -180,12 +98,6 @@ function Invoke-ZipDownload {
   Invoke-WebRequest $url -OutFile $filename
   Expand-Archive $filename .
   Remove-Item $filename
-}
-
-# Returns the Windows build number:
-function Get-WindowsBuildNumber {
-  (Get-ItemProperty 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion' `
-    'CurrentBuild').CurrentBuild
 }
 
 # Returns the Edge version number:
@@ -216,17 +128,6 @@ function Install-EdgeDriver {
   }
 }
 
-# Installs IEDriverServer:
-function Install-IEDriverServer {
-  if (!(Test-Path bin\IEDriverServer.exe)) {
-    New-Item bin -ItemType Directory -Force
-    Clear-Host
-    'Installing IEDriverServer ...'
-    Invoke-ZipDownload $downloads.IEDriver
-    Move-Item IEDriverServer.exe bin
-  }
-}
-
 # Installs and configures nginx:
 function Install-NGINX {
   if (!(Test-Path nginx)) {
@@ -234,7 +135,12 @@ function Install-NGINX {
     'Installing nginx ...'
     Invoke-ZipDownload $downloads.nginx
     Move-Item nginx-* nginx
-    $nginxConfig | Out-File nginx\conf\nginx.conf ASCII
+  }
+  if ((Test-Path nginx) -and (Test-Path nginx.conf)) {
+    # Bind nginx to all interfaces instead of only localhost:
+    (Get-Content nginx.conf) -replace '127.0.0.1:4444', '4444' |
+      Set-Content nginx.conf
+    Move-Item nginx.conf nginx\conf\nginx.conf -Force
   }
 }
 
@@ -279,30 +185,19 @@ function Update-Path {
   }
 }
 
-# Starts nginx, IEDriverServer and msedgedriver (if installed).
-# Waits for IEDriverServer to close, then sends nginx the stop signal:
-function Start-Service {
+# Starts msedgedriver with nginx as reverse proxy as well as MJPEGServer:
+function Start-Webdriver {
   Clear-Host
-  '========================================================'
-  'IMPORTANT: Do not close this window manually.'
-  'It will close automatically when MJPEGServer is stopped.'
-  '========================================================'
   'Starting servers ...'
-  if (Get-Command msedgedriver -ErrorAction SilentlyContinue) {
-    Start-Process msedgedriver '--port=4444 --whitelisted-ips='
-  }
-  Start-Process IEDriverServer
+  Start-Process msedgedriver '--port=3333'
   Start-Process nginx -WorkingDirectory nginx
-  Start-Process MJPEGServer $ffmpegCommand -Wait
-  Start-Process nginx '-s stop' -WorkingDirectory nginx
+  Start-Process MJPEGServer $ffmpegCommand
 }
 
-Edit-CurrentUserRegistry
 Update-HostsFile
 Install-EdgeDriver
-Install-IEDriverServer
 Install-NGINX
 Install-FFmpeg
 Install-MJPEGServer
 Update-Path
-Start-Service
+Start-Webdriver
