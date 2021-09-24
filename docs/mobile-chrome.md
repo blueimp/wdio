@@ -26,8 +26,7 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
    Android 10's file system format.
 
 2. Add the following lines to your `~/.profile` to make the JDK included in
-   Android Studio and the installed Android SDK available to
-   [Appium](https://appium.io/):
+   Android Studio and the installed Android SDK available to other applications:
 
    ```sh
    export JAVA_HOME='/Applications/Android Studio.app/Contents/jre/Contents/Home'
@@ -35,26 +34,58 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
    export ANDROID_HOME=~/Library/Android/sdk
    ```
 
-3. Install [Node.JS](https://nodejs.org/) via [Homebrew](https://brew.sh/):
+3. Start the Android Virtual Device with a custom `/etc/hosts` file:
+
+   ```sh
+   bin/android-emulator.sh -hosts etc/android.hosts
+   ```
+
+4. Change the virtual device settings to enable a hardware keyboard and increase
+   the internal storage:
+
+   - In Android Studio on the welcome dialog, select "More Actions" => "AVD
+     Manager", then with a right mouse click on your listed Virtual Device,
+     bring up the menu and select "Edit".
+   - Click on the "Show Advanced Settings" button to be able to see all
+     settings.
+   - Scroll to the "Memory and Storage" section and change the value of
+     "Internal Storage" to `2048` (MB).
+   - Scroll to the bottom of the configuration pane and mark the checkbox for
+     "Enable keyboard input".
+   - Click the "Finish" button and restart the virtual device.
+
+5. Install the latest Google Chrome for Android version:
+
+   - Download the latest
+     [Google Chrome APK](https://www.apkmirror.com/apk/google-inc/chrome/)
+     (Android Application Package) for the architecture of your emulated device
+     (`x86`).
+   - Drag&drop the APK file into the emulator window to install it or install it
+     via command-line:
+     ```sh
+     adb install com.android.chrome_*.apk
+     ```
+
+6. Install [Node.JS](https://nodejs.org/) via [Homebrew](https://brew.sh/):
 
    ```sh
    brew install node
    ```
 
-4. Make sure the necessary [Appium](https://appium.io/) dependencies for Android
+7. Make sure the necessary [Appium](https://appium.io/) dependencies for Android
    testing are installed:
 
    ```sh
    npx appium-doctor --android
    ```
 
-5. Install [Appium](https://appium.io/) as global NPM package:
+8. Install [Appium](https://appium.io/) as global NPM package:
 
    ```sh
    npm install -g appium
    ```
 
-6. Start `appium` with the provided helper script:
+9. Start `appium` with the provided helper script:
 
    ```sh
    bin/appium.sh
@@ -65,47 +96,15 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
    and will download a `chromedriver` version compatible with the version of
    Chrome running on the Android device.
 
-7. Start the Android Virtual Device with a custom `/etc/hosts` file:
+10. Run the tests with Mobile Chrome:
 
-   ```sh
-   bin/android-emulator.sh -hosts etc/android.hosts
-   ```
+    ```sh
+    docker-compose run --rm wdio conf/mobile-chrome.js
+    ```
 
-   **How to change the Android Virtual Device settings:**
+    To run the tests in landscape orientation, provide the `ORIENTATION`
+    environment variable:
 
-   - In Android Studio on the welcome dialog, select "More Actions" => "AVD
-     Manager", then with a right mouse click on your listed Virtual Device,
-     bring up the menu and select "Edit". Click on the "Show Advanced Settings"
-     button to be able to see all settings. Change your desired settings, then
-     click on the "Finish" button. Make sure to restart the virtual device to
-     apply the settings.
-
-   **How to enable a hardware keyboard:**
-
-   - In the Advanced Settings of your virtual device (see above), scroll down in
-     the configuration pane and check "Enable keyboard". Click the "Finish"
-     button and restart the virtual device.
-
-   **How to update the installed Google Chrome version:**
-
-   - Download a Google Chrome APK (Android Application Package) for the
-     architecture of your emulated device (e.g. `x86`), e.g. from
-     [APK Mirror](https://www.apkmirror.com/apk/google-inc/chrome/).
-   - Drag&drop the APK file into the emulator window to install it or
-     alternatively, install it via command-line:
-     ```sh
-     adb install com.android.chrome_*.apk
-     ```
-
-8. Run the tests with Mobile Chrome:
-
-   ```sh
-   docker-compose run --rm wdio conf/mobile-chrome.js
-   ```
-
-   To run the tests in landscape orientation, provide the `ORIENTATION`
-   environment variable:
-
-   ```sh
-   ORIENTATION=LANDSCAPE docker-compose run --rm wdio conf/mobile-chrome.js
-   ```
+    ```sh
+    ORIENTATION=LANDSCAPE docker-compose run --rm wdio conf/mobile-chrome.js
+    ```
