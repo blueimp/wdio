@@ -16,10 +16,12 @@ const config = {
       maxInstances: 1,
       browserName: 'chrome',
       platformName: 'Android',
-      platformVersion: process.env.PLATFORM_VERSION,
-      deviceName: process.env.DEVICE_NAME || 'Android Emulator',
-      nativeWebScreenshot: true,
-      orientation
+      'appium:automationName': 'UiAutomator2',
+      'appium:platformVersion': process.env.PLATFORM_VERSION,
+      'appium:deviceName': process.env.DEVICE_NAME || 'Android Emulator',
+      // @ts-ignore
+      'appium:nativeWebScreenshot': true,
+      'appium:orientation': orientation
     }
   ],
   videos: {
