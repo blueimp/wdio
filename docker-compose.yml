@@ -56,8 +56,8 @@ services:
       - MACOS_ASSETS_DIR=$PWD/assets/
       - WINDOWS_ASSETS_DIR
     volumes:
-      - .:/opt:ro
-      - ./reports:/opt/reports
+      - .:/app:ro
+      - ./reports:/app/reports
     depends_on:
       - chromedriver
       - geckodriver

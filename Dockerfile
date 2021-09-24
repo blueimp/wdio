@@ -25,14 +25,13 @@ ENV NODE_PATH=/usr/lib/wdio/node_modules
 # Extend path to be able to run installed binaries:
 ENV PATH=$PATH:/usr/lib/wdio/node_modules/.bin
 
+COPY bin/wait-for-hosts.sh /usr/local/bin/wait-for-hosts
+
+WORKDIR /app
+
 # Avoid permission issues with host mounts by assigning a user/group with
 # uid/gid 1000 (usually the ID of the first user account on GNU/Linux):
 RUN adduser -D -u 1000 wdio
-
 USER wdio
-
-WORKDIR /opt
-
-COPY bin/wait-for-hosts.sh /usr/local/bin/wait-for-hosts
 
 ENTRYPOINT ["tini", "-g", "--", "wait-for-hosts", "--", "wdio"]
