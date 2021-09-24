@@ -71,6 +71,21 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
    bin/android-emulator.sh -hosts etc/android.hosts
    ```
 
+   **How to change the Android Virtual Device settings:**
+
+   - In Android Studio on the welcome dialog, select "More Actions" => "AVD
+     Manager", then with a right mouse click on your listed Virtual Device,
+     bring up the menu and select "Edit". Click on the "Show Advanced Settings"
+     button to be able to see all settings. Change your desired settings, then
+     click on the "Finish" button. Make sure to restart the virtual device to
+     apply the settings.
+
+   **How to enable a hardware keyboard:**
+
+   - In the Advanced Settings of your virtual device (see above), scroll down in
+     the configuration pane and check "Enable keyboard". Click the "Finish"
+     button and restart the virtual device.
+
    **How to update the installed Google Chrome version:**
 
    - Download a Google Chrome APK (Android Application Package) for the
