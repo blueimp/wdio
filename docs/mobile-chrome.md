@@ -7,6 +7,7 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
    select "More Actions" => "SDK Manager", then switch to the "SDK Tools" tab
    and install the following components (if not already installed):
 
+   - Android SDK Command-line Tools
    - Android Emulator
    - Android SDK Platform-Tools
    - Intel x86 Emulator Accelerator (HAXM installer)

@@ -21,7 +21,7 @@
 set -e
 
 DEVICE_ID='pixel'
-SYSTEM_IMAGE='system-images;android-[0-9]*;google_apis;x86'
+SYSTEM_IMAGE='system-images;android-[0-9]*;google_apis;x86\>'
 SDCARD='512M'
 
 if [ -z "$ANDROID_HOME" ]; then
@@ -38,11 +38,11 @@ emulator() {
 }
 
 avdmanager() {
-  "$ANDROID_HOME/tools/bin/avdmanager" "$@"
+  "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" "$@"
 }
 
 sdkmanager() {
-  "$ANDROID_HOME/tools/bin/sdkmanager" "$@"
+  "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$@"
 }
 
 normalize() {
