@@ -21,7 +21,8 @@
 set -e
 
 DEVICE_ID='pixel'
-SYSTEM_IMAGE='system-images;android-[0-9]*;google_apis;x86\>'
+SYSTEM_IMAGE_REGEXP='system-images;android-[0-9]*;google_apis;x86\>'
+WRITABLE_SYSTEM_IMAGE='system-images;android-28;google_apis;x86'
 SDCARD='512M'
 
 if [ -z "$ANDROID_HOME" ]; then
@@ -54,7 +55,11 @@ get_avd() {
 }
 
 get_image() {
-  sdkmanager --list | grep -o "$SYSTEM_IMAGE" | tail -1
+  if [ -n "$HOSTS_FILE" ]; then
+    echo "$WRITABLE_SYSTEM_IMAGE"
+  else
+    sdkmanager --list | grep -o "$SYSTEM_IMAGE_REGEXP" | tail -1
+  fi
 }
 
 download_image() {
