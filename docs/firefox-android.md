@@ -1,8 +1,8 @@
-### Mobile Firefox
+### Firefox on Android
 
-To run the tests with Mobile Firefox on Android Simulator
+To run the tests with Firefox on Android:
 
-1. Follow steps 1-4 in the [Mobile Chrome](mobile-chrome.md) guide.
+1. Follow steps 1-4 in the [Chrome on Android](chrome-android.md) guide.
 
 2. Install the latest Mozilla Firefox for Android version:
 
@@ -29,8 +29,8 @@ To run the tests with Mobile Firefox on Android Simulator
    bin/geckodriver.sh
    ```
 
-5. Run the tests with Mobile Firefox:
+5. Run the tests with Firefox on Android:
 
    ```sh
-   docker-compose run --rm wdio conf/mobile-firefox.js
+   docker-compose run --rm wdio conf/firefox-android.js
    ```

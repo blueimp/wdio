@@ -1,6 +1,6 @@
-### Mobile Chrome
+### Chrome on Android
 
-To run the tests with Mobile Chrome on Android Simulator, follow these steps:
+To run the tests with Chrome on Android, follow these steps:
 
 1. Download [Android Studio](https://developer.android.com/studio/) (release
    version "Arctic Fox" at the time of this writing) and on the welcome dialog,
@@ -96,15 +96,15 @@ To run the tests with Mobile Chrome on Android Simulator, follow these steps:
    and will download a `chromedriver` version compatible with the version of
    Chrome running on the Android device.
 
-10. Run the tests with Mobile Chrome:
+10. Run the tests with Chrome on Android:
 
     ```sh
-    docker-compose run --rm wdio conf/mobile-chrome.js
+    docker-compose run --rm wdio conf/chrome-android.js
     ```
 
     To run the tests in landscape orientation, provide the `ORIENTATION`
     environment variable:
 
     ```sh
-    ORIENTATION=LANDSCAPE docker-compose run --rm wdio conf/mobile-chrome.js
+    ORIENTATION=LANDSCAPE docker-compose run --rm wdio conf/chrome-android.js
     ```
