@@ -97,9 +97,11 @@ wait_for_device() {
 
 update_hosts_file() {
   adb root
+  wait_for_device
   adb remount
   adb push "$1" /etc/hosts
   adb unroot
+  wait_for_device
 }
 
 if [ "$1" = -hosts ]; then
