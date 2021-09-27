@@ -15,6 +15,7 @@ on Android as well as Safari on iOS, Safari on macOS and Edge on Windows.
   - [Chrome on Android](docs/chrome-android.md)
   - [Firefox on Android](docs/firefox-android.md)
   - [Edge](docs/edge.md)
+- [Tags](#tags)
 - [License](#license)
 - [Author](#author)
 
@@ -31,6 +32,17 @@ Stop and remove the container set:
 ```sh
 docker-compose down
 ```
+
+## Tags
+
+For any critical infrastructure (e.g. your company's Continuous Integration
+tests) it is **strongly** recommended to use your own tagged Docker images
+instead of `blueimp/wdio` and the other provided sample Docker images directly,
+as changes in the included software might break your tests inadvertently. See
+also:
+
+- [blueimp/chromedriver#tags](https://github.com/blueimp/chromedriver#tags)
+- [blueimp/geckodriver#tags](https://github.com/blueimp/geckodriver#tags)
 
 ## License
 
