@@ -14,4 +14,4 @@ open vnc://user:secret@localhost:5900
 
 **Please Note:**  
 To be able to see Chrome running via VNC or screen recordings, disable headless
-mode in [chrome.js](chrome.js).
+mode in [../conf/chrome.js](../conf/chrome.js).
