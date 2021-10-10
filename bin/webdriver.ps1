@@ -34,8 +34,8 @@ $ffmpegOptions = @{
 
 $versions = @{
   nginx = '1.21.3'
-  ffmpeg = 'autobuild-2021-09-24-12-21/' +
-    'ffmpeg-n4.4-154-g79c114e1b2-win64-gpl-shared-4.4'
+  ffmpeg = 'autobuild-2021-10-09-12-22/' +
+    'ffmpeg-n4.4-178-g4b583e5425-win64-gpl-shared-4.4'
   MJPEGServer = '1.3.0'
 }
 
