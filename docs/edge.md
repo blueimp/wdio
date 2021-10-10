@@ -1,15 +1,15 @@
 ### Edge
 
 **Please Note:**  
-This guide assumes that a system with Windows 10+ has been set up and the
-[Microsoft Edge](https://www.microsoft.com/en-us/edge) browser has been
+This guide assumes that a system with Windows 10 or later has been set up and
+the [Microsoft Edge](https://www.microsoft.com/en-us/edge) browser has been
 installed.
 
 To run the tests with Edge, follow these steps:
 
 1. Create a `.env` file in the same directory as
-   [docker-compose.yml](docker-compose.yml) and add the following environment
-   variables:
+   [../docker-compose.yml](../docker-compose.yml) and add the following
+   environment variables:
 
    ```sh
    SERVER_HOST=<DOCKER_HOST_IP>
@@ -33,9 +33,11 @@ To run the tests with Edge, follow these steps:
    Also copy the files in the [../assets](../assets) directory to the folder
    defined as `WINDOWS_ASSETS_DIR`.
 
-4. Create a shortcut to `webdriver.ps1` (via "Right-Click" → "Create shortcut"),
-   then open the properties dialog for the shortcut (via "Right-Click" →
-   "Properties") and set the `Target` property to the following value:
+4. Create a shortcut to `webdriver.ps1` (via "Right-Click" → "Create shortcut"
+   on Windows 10 and "Right-Click" → "Show more options" → "Create shortcut" on
+   Windows 11), then open the properties dialog for the shortcut (via
+   "Right-Click" → "Properties") and set the `Target` property to the following
+   value:
 
    ```bat
    powershell -ExecutionPolicy ByPass -File webdriver.ps1
@@ -43,7 +45,12 @@ To run the tests with Edge, follow these steps:
 
    Click "OK" to save the changes to the shortcut.
 
-5. Double-Click on the webdriver shortcut to setup and start the servers.  
+5. Double-Click on the webdriver shortcut to setup and start the servers.
+
+   Confirm the dialog to "allow this app to make changes to your device", so it
+   can edit the Windows hosts file (this dialog only appears if a
+   `windows.hosts` file is present in the same directory).
+
    Allow `nginx` and `MJPEGServer` to communicate on all networks in the Windows
    Defender Firewall dialog.
 
