@@ -36,9 +36,9 @@ jobs:
         run: docker-compose down -v
       - name: Upload reports
         if: always()
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@v2
         with:
-          name: reports
+          name: chrome-reports
           path: reports
 
   wdio-firefox:
@@ -61,7 +61,7 @@ jobs:
         run: docker-compose down -v
       - name: Upload reports
         if: always()
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@v2
         with:
-          name: reports
+          name: firefox-reports
           path: reports
