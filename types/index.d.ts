@@ -10,17 +10,6 @@ declare namespace WebdriverIO {
 
   interface Browser {
     config: Config
-
-    getMail: mailhog['messages']
-    searchMail: mailhog['search']
-    latestMailFrom: mailhog['latestFrom']
-    latestMailTo: mailhog['latestTo']
-    latestMailContaining: mailhog['latestContaining']
-    releaseMail: mailhog['releaseMessage']
-    deleteMail: mailhog['deleteMessage']
-    deleteAllMail: mailhog['deleteAll']
-    encodeMail: mailhog['encode']
-    decodeMail: mailhog['decode']
     saveScreenshotByName: typeof import('wdio-screen-commands').saveScreenshotByName
     saveAndDiffScreenshot: typeof import('wdio-screen-commands').saveAndDiffScreenshot
   }

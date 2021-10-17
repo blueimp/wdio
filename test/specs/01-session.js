@@ -3,7 +3,7 @@
 /* global browser, describe, it, expect */
 /* eslint-disable new-cap */
 
-const config = require('../')
+const config = require('../config')
 const Login = require('../pages/login')
 const Mail = require('../pages/mail')
 

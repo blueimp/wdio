@@ -4,7 +4,8 @@
 /* eslint-disable new-cap */
 
 const uuidv4 = require('uuid').v4
-const config = require('../')
+const config = require('../config')
+const { mailhog } = require('../util')
 const Login = require('../pages/login')
 const Mail = require('../pages/mail')
 
@@ -31,6 +32,6 @@ describe('Mail', () => {
     await expect(browser).toHaveTitle('Mail sent!')
     await browser.saveAndDiffScreenshot('Mail sent')
     await Mail.return()
-    await expect((await browser.latestMailTo(recipient)).text).toBe(content)
+    await expect((await mailhog.latestTo(recipient)).text).toBe(content)
   })
 })

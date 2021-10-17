@@ -48,6 +48,7 @@ services:
       - /home/wdio/.android
     environment:
       - WAIT_FOR_HOSTS=chromedriver:4444 geckodriver:4444 example:8080
+      - MAILHOG_HOST=mailhog
       - WINDOWS_HOST
       - ANDROID_SERIAL
       - PLATFORM_VERSION

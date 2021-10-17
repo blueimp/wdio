@@ -3,7 +3,8 @@
 /* global browser, describe, it, expect, BufferEncoding */
 
 const uuidv4 = require('uuid').v4
-const config = require('../')
+const config = require('../config')
+const { mailhog } = require('../util')
 const Login = require('../pages/login')
 const Mail = require('../pages/mail')
 const assetsDir = browser.config.assetsDir
@@ -37,7 +38,7 @@ describe('Attachments', () => {
     await Mail.send(recipient, 'One attachment', null, [
       assetsDir + 'black+white-60x40.gif'
     ])
-    const mail = await browser.latestMailTo(recipient)
+    const mail = await mailhog.latestTo(recipient)
     await expect(mail.attachments.length).toBe(1)
     const attachment = mail.attachments[0]
     await expect(attachment.name).toBe('black+white-60x40.gif')
@@ -58,7 +59,7 @@ describe('Attachments', () => {
       assetsDir + 'black+white-60x40.gif',
       assetsDir + 'black+white-3x2.jpg'
     ])
-    const mail = await browser.latestMailTo(recipient)
+    const mail = await mailhog.latestTo(recipient)
     await expect(mail.attachments.length).toBe(2)
     const attachment1 = mail.attachments[0]
     await expect(attachment1.name).toBe('black+white-60x40.gif')

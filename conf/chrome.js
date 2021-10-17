@@ -34,9 +34,6 @@ const config = {
     stopDelay: 500
   },
   assetsDir: '/home/webdriver/assets/',
-  mailhog: {
-    host: 'mailhog'
-  },
   baseUrl: 'http://example:8080'
 }
 
