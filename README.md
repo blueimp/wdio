@@ -16,6 +16,7 @@ on Android as well as Safari on iOS, Safari on macOS and Edge on Windows.
   - [Firefox on Android](docs/firefox-android.md)
   - [Edge](docs/edge.md)
 - [Tags](#tags)
+- [Playwright](#playwright)
 - [License](#license)
 - [Author](#author)
 
@@ -43,6 +44,12 @@ also:
 
 - [blueimp/chromedriver#tags](https://github.com/blueimp/chromedriver#tags)
 - [blueimp/geckodriver#tags](https://github.com/blueimp/geckodriver#tags)
+
+## Playwright
+
+An alternative example end-to-end testing setup using the
+[Playwright](https://playwright.dev/) framework can be found at
+[blueimp/playwright-example](https://github.com/blueimp/playwright-example).
 
 ## License
 
